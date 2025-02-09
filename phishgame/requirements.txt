@@ -3,5 +3,5 @@ openai
 pandas
 numpy
 flask
-flask-cors
-pymongodb
+Flask-Cors
+pymongo
