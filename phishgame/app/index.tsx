@@ -9,6 +9,9 @@ import { useState } from 'react';
 export default function HomeScreen() {
   const [difficulty, setDifficulty] = useState(0);
   const [score, setScore] = useState(100); 
+  function updateScore(input : number) {
+    setScore(score - input);
+  }
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.container}>
@@ -33,6 +36,7 @@ export default function HomeScreen() {
                 placeholder="Search"
               />
             </View>
+            <Text style={styles.score}>Score: {score}</Text>
           </LinearGradient>
         <View style={styles.body}>
           <View style={styles.sidebar}>
@@ -43,7 +47,7 @@ export default function HomeScreen() {
           </View>
           <View style={styles.main}>
             <TagsList difficulty = {difficulty} selectIndex = {setDifficulty}/>
-            <EmailsList emails = {require("../test/phishnoob2.json")} updateScore = {setScore}/>
+            <EmailsList emails = {require("../test/phishnoob2.json")} updateScore = {updateScore}/>
           </View>
         </View>
         </LinearGradient>
@@ -53,6 +57,11 @@ export default function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
+  score: {
+    flex: 0.4,
+    color: 'white',
+    textAlign: 'right',
+  },
   container: {
     flex: 1,
   },
@@ -71,7 +80,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   title: {
-    flex: 0.3,
+    flex: 0.45,
     fontSize: 20,
     fontWeight: 'bold',
     color: "#EEEEEE",
@@ -84,6 +93,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 20,
     height: 40,
+    marginRight: 20,
   },
   searchIcon: {
     width: 30,
