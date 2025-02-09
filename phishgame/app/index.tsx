@@ -36,7 +36,7 @@ export default function HomeScreen() {
                 placeholder="Search"
               />
             </View>
-            <Text style={styles.score}>Score: {score}</Text>
+            <Text style={styles.score}>Lives: {score}</Text>
           </LinearGradient>
         <View style={styles.body}>
           <View style={styles.sidebar}>
