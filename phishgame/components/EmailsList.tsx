@@ -14,7 +14,7 @@ const EmailPop = ({ isVisible, children, onClose }: EmailPopProp) => {
       animationType="slide"
       transparent={true}
       visible={isVisible}
-      onRequestClose={() => onClose(false)}
+      onRequestClose={() => void(0)}
     >
       <View style={styles.outerEmail}>
         <View style={styles.openEmail}>
@@ -48,15 +48,16 @@ interface EmailProps {
   info: any;
   updateScore: (input: number) => void;
   removeEmail: (index: number) => void; // Add removeEmail prop
+  generated: boolean;
 }
 
-const Email = ({ index, info, updateScore, removeEmail }: EmailProps) => {
+const Email = ({ index, info, updateScore, removeEmail, generated}: EmailProps) => {
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
   const onModalOpen = () => setIsModalVisible(true);
 
   const closeModal = (answer: boolean) => {
-    if (info && answer !== (info.phish_or_not === "\"phish\"")) {
+    if (info && answer !== (info.phish_or_not === "\"Phish\"")) {
       updateScore(parseInt(info.lives_lost_if_wrong) || 0);
     }
     removeEmail(index); // Call removeEmail to remove the email from the list
@@ -69,45 +70,76 @@ const Email = ({ index, info, updateScore, removeEmail }: EmailProps) => {
   const content = body + callToAction;
   const topic = info?.topic || "";
   const subject = info?.subject || "";
-
-  return (
-    <TouchableOpacity onPress={onModalOpen} style={styles.emailBox}>
-      <Text style={styles.emailSender}>
-        {topic.length > 15 ? topic.slice(0, 15) : topic}
-      </Text>
-      <View style={styles.emailLine}>
-        <Text style={styles.emailSubject}>{subject}</Text>
-        <Text style={styles.emailBody}>
-          {" - " + content.slice(0, 160).replace(/(\r\n|\n|\r)/gm, "")}
+  if (generated) {
+    return (
+      <TouchableOpacity onPress={onModalOpen} style={styles.emailBox}>
+        <Text style={styles.emailSender}>
+          {topic.length > 30 ? topic.slice(0, 30) : topic}
         </Text>
-        <EmailPop isVisible={isModalVisible} onClose={closeModal}>
-          <Text style={styles.emailMain}>{content}</Text>
-        </EmailPop>
+        <View style={styles.emailLine}>
+          <Text style={styles.emailSubject}>{subject}</Text>
+          <Text style={styles.emailBody}>
+            {" - " + content.slice(0, 145).replace(/(\r\n|\n|\r)/gm, "")}
+          </Text>
+          <EmailPop isVisible={isModalVisible} onClose={closeModal}>
+            <Text style={styles.emailMain}>{content}</Text>
+          </EmailPop>
+        </View>
+      </TouchableOpacity>
+    );
+  } else {
+    return (
+      <View style={styles.emailBox}>
+        <Text style={styles.emailSender}>
+          {topic.length > 30 ? topic.slice(0, 30) : topic}
+        </Text>
+        <View style={styles.emailLine}>
+          <Text style={styles.emailSubject}>{subject}</Text>
+          <Text style={styles.emailBody}>
+            {" - " + content.slice(0, 145).replace(/(\r\n|\n|\r)/gm, "")}
+          </Text>
+          <EmailPop isVisible={isModalVisible} onClose={closeModal}>
+            <Text style={styles.emailMain}>{content}</Text>
+          </EmailPop>
+        </View>
       </View>
-    </TouchableOpacity>
-  );
+    );
+  }
 };
 
 interface EmailsListProps {
   emails: any[];
+  score : number;
   updateScore: (input: number) => void;
   removeEmail: (index: number) => void; // Add removeEmail prop
+  endGame: (win : boolean) => void;
+  generated: boolean;
 }
 
-export function EmailsList({ emails, updateScore, removeEmail }: EmailsListProps) {
-  return (
-    <View style={styles.emails}>
-      {emails.map((email, index) => (
-        <Email
-          key={index}
-          index={index}
-          info={email}
-          updateScore={updateScore}
-          removeEmail={removeEmail} // Pass removeEmail to Email component
-        />
-      ))}
-    </View>
-  );
+export function EmailsList({ emails, score, updateScore, removeEmail, endGame, generated }: EmailsListProps) {
+  if (emails.length === 0 || score <= 0) {
+    endGame(false);
+    updateScore(-(100-score));
+    return (
+      <View style={styles.emails}>
+      </View>
+    )
+  } else {
+    return (
+      <View style={styles.emails}>
+        {emails.map((email, index) => (
+          <Email
+            key={index}
+            index={index}
+            info={email}
+            updateScore={updateScore}
+            removeEmail={removeEmail} // Pass removeEmail to Email component
+            generated = {generated}
+          />
+        ))}
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
@@ -134,7 +166,7 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   emailSender: {
-    flex: 0.13,
+    flex: 0.26,
     fontSize: 18,
     fontWeight: 'bold',
     marginRight: 10,
@@ -142,7 +174,7 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   emailLine: {
-    flex: 0.87,
+    flex: 0.74,
     flexDirection: 'row',
     alignItems: 'center',
   },

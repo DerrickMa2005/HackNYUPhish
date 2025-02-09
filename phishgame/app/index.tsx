@@ -19,6 +19,7 @@ export default function HomeScreen() {
   const [generatedEmails, setGeneratedEmails] = useState<any[]>([]);
   const [displayedEmails, setDisplayedEmails] = useState<any[]>([]);
   const [gameStarted, setGameStarted] = useState(false);
+  const [gameGenerated, setGameGenerated] = useState(false);
   const [isPreGenerating, setIsPreGenerating] = useState(false);
   const revealIndex = useRef(0); // Use useRef to persist the index across renders
   const [fontsLoaded] = useFonts({
@@ -65,13 +66,15 @@ export default function HomeScreen() {
     setDisplayedEmails([]);
     revealIndex.current = -1; // Reset the index when starting a new game
     const emailsToSend = [...generatedEmails];
-
+    setGameGenerated(false);
     const revealNext = () => {
       if (revealIndex.current < emailsToSend.length - 1) {
         setDisplayedEmails(prev => [...prev, emailsToSend[revealIndex.current]]);
         revealIndex.current++;
-        const delay = Math.floor(Math.random() * (3000 - 2000 + 1)) + 2000; // Reduced delay range
+        const delay = Math.floor(Math.random() * (500)) + 500; // Reduced delay range
         setTimeout(revealNext, delay);
+      } else {
+        setGameGenerated(true);
       }
     };
     revealNext();
@@ -135,13 +138,17 @@ export default function HomeScreen() {
               <TagsList
                 difficulty={difficulty}
                 selectIndex={(index: number) => {
-                  setDifficulty(index);
-                  setGeneratedEmails([]);
-                  setDisplayedEmails([]);
-                  setGameStarted(false);
+                  if (!gameStarted) {
+                    setDifficulty(index);
+                    setGeneratedEmails([]);
+                    setDisplayedEmails([]);
+                    setGameStarted(false);
+                  }
                 }}
               />
-              <EmailsList emails={displayedEmails} updateScore={updateScore} removeEmail={removeEmail} />
+              {gameStarted && (<EmailsList emails={displayedEmails} score = {score} 
+              updateScore={updateScore} removeEmail={removeEmail} 
+              endGame = {setGameStarted} generated = {gameGenerated}/>)}
             </View>
           </View>
           {!gameStarted && (

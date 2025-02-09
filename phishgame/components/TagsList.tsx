@@ -24,7 +24,7 @@ const Tag = ({difficulty, isSelected, onPress} : TagsProps) => {
       source = {imageUrls[difficulty + (isSelected ? 3 : 0)]}
       style={styles.Icon}
       />
-      <Text style = {[getTextColor(), styles.tagText]}>{difficulty === 0 ? 'Phish Noob' : difficulty=== 1 ? 'Phismediate' : 'Phish Master'} </Text>
+      <Text style = {[getTextColor(), styles.tagText]}>{difficulty === 0 ? 'Phish Noob' : difficulty=== 1 ? 'Phish Disciple' : 'Phish Master'} </Text>
     </TouchableOpacity>
   );
 }
