@@ -1,7 +1,9 @@
 import { Text, View, StyleSheet, Modal, TouchableOpacity, Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import React, { useState } from 'react';
-import { useFonts } from 'expo-font';
+import React, { useRef, useState } from 'react';
+import { useFonts } from 'expo-font'; 
+import { Audio } from 'expo-av';
+
 
 interface CorrectionPopProp {
   isVisible: boolean;
@@ -9,6 +11,16 @@ interface CorrectionPopProp {
   onClose: () => void;
 }
 
+const shotsFired = async () => {
+  try {
+    const { sound } = await Audio.Sound.createAsync(
+      require("@/assets/sounds/machine-gun-71417.mp3")
+    );
+    await sound.playAsync();
+  } catch (error) {
+    console.error("Error playing audio:", error);
+  }
+};
 const CorrectionPop = ({ isVisible, children, onClose }: CorrectionPopProp) => {
   return (
     <Modal
@@ -98,6 +110,7 @@ const Email = ({ index, info, updateScore, removeEmail, generated }: EmailProps)
     removeEmail(index); // Call removeEmail to remove the email from the list
     setIsModalVisible(false);
     if (info && answer !== (info.phish_or_not === "\"Phish\"")) {
+      shotsFired();
       updateScore(parseInt(info.lives_lost_if_wrong) || 0);
       setIsExplainVisible(true);
     }
