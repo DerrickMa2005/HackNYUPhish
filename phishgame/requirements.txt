@@ -1,0 +1,8 @@
+requests
+openai
+pandas
+numpy
+flask
+Flask-Cors
+pymongo
+gunicorn

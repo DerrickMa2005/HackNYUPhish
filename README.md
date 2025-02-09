@@ -1,2 +1,0 @@
-# HackNYUPhish
-Hey
