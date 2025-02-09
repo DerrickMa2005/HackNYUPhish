@@ -8,7 +8,7 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "start-all": "concurrently \"npm run web\" \"python phishgame/server.py\"",
+    "start-all": "concurrently \"npm run web\" \"python /server.py\"",
     "test": "jest --watchAll",
     "lint": "expo lint",
     "dev": "concurrently \"python server.py\" \"npm start --web\""

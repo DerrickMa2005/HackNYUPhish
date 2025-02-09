@@ -36,13 +36,10 @@ client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
 ###############################################################################
 #                        SETUP MONGODB CONNECTION
 ###############################################################################
-# Update the connection URI as needed.
 mongo_uri = "mongodb+srv://Jigsawtemmy20:Password123@cluster0.vetz9.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 try:
     mongo_client = MongoClient(mongo_uri, serverSelectionTimeoutMS=5000)
-    # Force a connection attempt.
     mongo_client.server_info()
-    # Connect to the 'emails' database (update as needed).
     db = mongo_client['emails']
     print("Connected to MongoDB. Collections found:", db.list_collection_names())
 except ServerSelectionTimeoutError as err:
@@ -50,7 +47,6 @@ except ServerSelectionTimeoutError as err:
     print(err)
     exit(1)
 
-# Define collections (ensure these names match your MongoDB collections).
 emails_collection = db['emails']
 urls_collection = db['urls']
 urls2_collection = db['urls2']
@@ -60,8 +56,8 @@ urls2_collection = db['urls2']
 ###############################################################################
 def fetch_random_document(collection, filter_dict: dict = None) -> dict:
     """
-    Fetch a random document from a collection.
-    If a filter is provided, it is applied before sampling.
+    Fetch a random document from the specified collection.
+    If a filter is provided, it is applied first.
     Returns an empty dict if no document is found.
     """
     pipeline = []
@@ -76,8 +72,7 @@ def fetch_random_document(collection, filter_dict: dict = None) -> dict:
 
 def sample_df1_info() -> dict:
     """
-    Sample a document from the URLs collection (formerly df1)
-    and return a dictionary with URL-related fields.
+    Sample a document from 'urls_collection' (df1).
     """
     row = fetch_random_document(urls_collection)
     info = {
@@ -94,8 +89,7 @@ def sample_df1_info() -> dict:
 
 def sample_df2_info() -> dict:
     """
-    Sample a document from the second URLs collection (formerly df2)
-    and return a dictionary with target/verification details.
+    Sample a document from 'urls2_collection' (df2).
     """
     row = fetch_random_document(urls2_collection)
     info = {
@@ -111,7 +105,9 @@ def sample_df2_info() -> dict:
 #                         PROMPT BUILDERS
 ###############################################################################
 def generate_phish_prompt(difficulty: str) -> str:
-    # Sample an email from the emails collection.
+    """
+    Builds a prompt for generating a phishing email.
+    """
     sample_email = fetch_random_document(emails_collection)
     sample_text = sample_email.get("Email Text", "No sample text available")
     
@@ -137,8 +133,8 @@ def generate_phish_prompt(difficulty: str) -> str:
 You are generating a single phishing (Phish) email for a "Phish Game" with difficulty: {difficulty}.
 Style: {style}.
 
-Aim for roughly 500 words total. 
-**Return a single multiline string** with fields in the format:
+Aim for ~500 words. 
+Return a single multiline string with fields:
 topic: ...
 sender_persona: ...
 subject: ...
@@ -147,17 +143,21 @@ body: ...
 call_to_action: ...
 phish_or_not: "Phish"
 lives_lost_if_wrong: {lives_lost}
+explanation_if_wrong: ...  <-- The text to show if the user chooses wrongly
 
 Inspiration:
 Phishing snippet: "{sample_text}"
 URL Data: {df1_info}
 PhishTank: {df2_info}
 
-Must have at least 2 emojis, suspicious call-to-action, no extra commentary beyond the lines listed above.
+Must have at least 2 emojis, suspicious call-to-action, and no extra commentary beyond the lines above.
 """
     return prompt.strip()
 
 def generate_non_phish_prompt(difficulty: str, raw_email_text: str) -> str:
+    """
+    Builds a prompt for generating a non-phish email.
+    """
     if difficulty in DIFFICULTY_PENALTIES:
         non_phish_range = DIFFICULTY_PENALTIES[difficulty][1]
         lives_lost = random.randint(*non_phish_range)
@@ -178,12 +178,13 @@ body: ...
 call_to_action: ...
 phish_or_not: "Not Phish"
 lives_lost_if_wrong: {lives_lost}
+explanation_if_wrong: ...  <-- The text to show if the user chooses wrongly
 
-No suspicious cues. At least 2 emojis. About 500 words.
-No extra commentary.
+No suspicious cues. ~500 words. No extra commentary.
 
 Original snippet:
 \"\"\"{raw_email_text}\"\"\"
+
 
 URL data: {df1_info}
 PhishTank: {df2_info}
@@ -198,32 +199,29 @@ def call_openai_chat(prompt: str) -> str:
 
     now = time.time()
     # Remove call timestamps older than 60 seconds
-    RECENT_CALL_TIMES = [t for t in RECENT_CALL_TIMES if now - t < 60]
+    RECENT_CALL_TIMES[:] = [t for t in RECENT_CALL_TIMES if now - t < 60]
 
-    # If already made 3 calls within last minute, wait until one expires
+    # If 3 calls in last min, wait
     if len(RECENT_CALL_TIMES) >= 3:
         wait_time = 60 - (now - RECENT_CALL_TIMES[0])
         time.sleep(wait_time)
 
-    # Now proceed with the request
     response = client.chat.completions.create(
         model=GPT_MODEL,
         messages=[{"role": "user", "content": prompt}],
         max_tokens=MAX_TOKENS,
         temperature=TEMPERATURE,
     )
-
-    # Record the time of this call
     RECENT_CALL_TIMES.append(time.time())
 
     return response.choices[0].message.content.strip()
 
 ###############################################################################
-#                          POST-PROCESSOR
+#                       POST-PROCESSOR
 ###############################################################################
 def parse_email_string(raw_text: str) -> dict:
     """
-    Expects lines like:
+    Expects lines:
     topic: ...
     sender_persona: ...
     subject: ...
@@ -232,8 +230,7 @@ def parse_email_string(raw_text: str) -> dict:
     call_to_action: ...
     phish_or_not: ...
     lives_lost_if_wrong: ...
-    
-    Returns a dict with these keys; missing fields are set to a default.
+    explanation_if_wrong: ...
     """
     result = {
         "topic": "",
@@ -243,10 +240,12 @@ def parse_email_string(raw_text: str) -> dict:
         "body": "",
         "call_to_action": "",
         "phish_or_not": "",
-        "lives_lost_if_wrong": 0
+        "lives_lost_if_wrong": 0,
+        "explanation_if_wrong": ""
     }
 
-    for line in raw_text.splitlines():
+    lines = raw_text.splitlines()
+    for line in lines:
         line = line.strip()
         if not line or ":" not in line:
             continue
@@ -264,18 +263,25 @@ def parse_email_string(raw_text: str) -> dict:
     return result
 
 ###############################################################################
-#         MAIN PER-DIFFICULTY (RANDOM PHISH, REST NON-PHISH) + POST-PARSE
+#                   MAIN GEN PER DIFFICULTY
 ###############################################################################
+def is_too_similar(new_text: str, existing_texts: list, threshold: float = 0.85) -> bool:
+    for text in existing_texts:
+        ratio = difflib.SequenceMatcher(None, new_text, text).ratio()
+        if ratio >= threshold:
+            return True
+    return False
+
 def generate_emails_for_difficulty(difficulty: str, num_emails: int = 10):
     phish_count = random.randint(2, 4)
     non_phish_count = num_emails - phish_count
-    flags = [True] * phish_count + [False] * non_phish_count
+    flags = [True]*phish_count + [False]*non_phish_count
     random.shuffle(flags)
 
     emails_output = []
     recent_texts = []
 
-    # Retrieve non-phishing emails from MongoDB (only the "Email Text" field).
+    # Retrieve non-phishing from Mongo
     non_phish_docs = list(emails_collection.find(
         {"Email Type": {"$not": {"$regex": "phishing", "$options": "i"}}},
         {"Email Text": 1, "_id": 0}
@@ -302,39 +308,37 @@ def generate_emails_for_difficulty(difficulty: str, num_emails: int = 10):
                 prompt = generate_non_phish_prompt(difficulty, chosen_raw_text)
                 raw_email = call_openai_chat(prompt)
 
-        # Similarity check to avoid near-duplicate outputs.
+        # Similarity check
         attempts_left = 2
         while is_too_similar(raw_email, recent_texts) and attempts_left > 0:
             print(f"Email {i} is too similar to a recent output. Regenerating...\n")
             raw_email = call_openai_chat(prompt)
             attempts_left -= 1
 
-        # Post-process the raw text into a structured dict.
+        # Parse
         parsed_email = parse_email_string(raw_email)
+
+        # NEW CHECK: if 'body' is empty, re-generate up to 2 more times
+        tries_for_body = 2
+        while not parsed_email["body"] and tries_for_body > 0:
+            print(f"Email {i} has empty 'body'. Regenerating...\n")
+            raw_email = call_openai_chat(prompt)
+            parsed_email = parse_email_string(raw_email)
+            tries_for_body -= 1
 
         emails_output.append(parsed_email)
         recent_texts.append(raw_email)
 
-        print(f"=== Generated Email {i} for '{difficulty}' (Phish? {parsed_email.get('phish_or_not', '')}) ===")
+        print(f"=== Generated Email {i} for '{difficulty}' (Phish? {parsed_email.get('phish_or_not','')}) ===")
         print(parsed_email)
-        print("=" * 60, "\n")
+        print("="*60, "\n")
 
         time.sleep(1)
 
     return emails_output
 
-def is_too_similar(new_text: str, existing_texts: list, threshold: float = 0.85) -> bool:
-    """
-    Returns True if new_text is too similar to any string in existing_texts.
-    """
-    for text in existing_texts:
-        ratio = difflib.SequenceMatcher(None, new_text, text).ratio()
-        if ratio >= threshold:
-            return True
-    return False
-
 ###############################################################################
-#                              MAIN EXECUTION
+#                            MAIN EXECUTION
 ###############################################################################
 if __name__ == "__main__":
     difficulties = ["phishnoob", "phishdisciple", "phishmaster"]
