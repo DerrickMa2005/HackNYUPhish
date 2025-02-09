@@ -7,6 +7,16 @@ import os  # Import the os module
 # Import from your model.py (adjust the path as needed)
 from model import generate_emails_for_difficulty, NUM_EMAILS_PER_DIFFICULTY
 
+app = Flask(__name__, static_folder='static')
+
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def serve(path):
+    if path != "" and os.path.exists(app.static_folder + '/' + path):
+        return send_from_directory(app.static_folder, path)
+    else:
+        return send_from_directory(app.static_folder, 'index.html')
+
 app = Flask(__name__, static_folder='static')  # Set the static folder
 CORS(app)
 
