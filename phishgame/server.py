@@ -1,12 +1,13 @@
-from flask import Flask, request, jsonify, Response
+from flask import Flask, request, jsonify, Response, send_from_directory
 from flask_cors import CORS
 import json
 import time
+import os  # Import the os module
 
 # Import from your model.py (adjust the path as needed)
 from model import generate_emails_for_difficulty, NUM_EMAILS_PER_DIFFICULTY
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static')  # Set the static folder
 CORS(app)
 
 @app.route('/generate_emails', methods=['GET'])
@@ -33,6 +34,15 @@ def generate_emails_stream():
             # Optional: small delay if needed
             time.sleep(0.5)
     return Response(generate(), mimetype='text/event-stream')
+
+# Serve static files
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def serve(path):
+    if path != "" and os.path.exists(app.static_folder + '/' + path):
+        return send_from_directory(app.static_folder, path)
+    else:
+        return send_from_directory(app.static_folder, 'index.html')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
