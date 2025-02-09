@@ -116,9 +116,10 @@ const Email = ({ index, info, updateScore, removeEmail, generated }: EmailProps)
     return (
       <TouchableOpacity onPress={onModalOpen} style={styles.emailBox}>
         <Text style={styles.emailSender}>
-          {topic.length > 30 ? topic.slice(0, 30) : topic}
+          {topic.length > 30 ? topic.slice(0, topic.slice(0, 30).lastIndexOf(" ")) : topic}
         </Text>
         <View style={styles.emailLine}>
+          <View style={styles.emailLineBody}>
           <Text style={styles.emailSubject}>{subject}</Text>
           <Text style={styles.emailBody}>
             {" - " + content.slice(0, 145).replace(/(\r\n|\n|\r)/gm, "")}
@@ -130,22 +131,22 @@ const Email = ({ index, info, updateScore, removeEmail, generated }: EmailProps)
             <Text style={styles.emailMain}>{explanation}</Text>
             </CorrectionPop>
         </View>
+        </View>
       </TouchableOpacity>
     );
   } else {
     return (
-      <View style={styles.emailBox}>
+        <View style={styles.emailBox}>
         <Text style={styles.emailSender}>
-          {topic.length > 30 ? topic.slice(0, 30) : topic}
+          {topic.length > 30 ? topic.slice(0, topic.slice(0, 30).lastIndexOf(" ")) : topic}
         </Text>
         <View style={styles.emailLine}>
+        <View style={styles.emailLineBody}>
           <Text style={styles.emailSubject}>{subject}</Text>
           <Text style={styles.emailBody}>
             {" - " + content.slice(0, 145).replace(/(\r\n|\n|\r)/gm, "")}
           </Text>
-          <EmailPop isVisible={isModalVisible} onClose={closeModal}>
-            <Text style={styles.emailMain}>{content.replace(/\\n/g, '\n')}</Text>
-          </EmailPop>
+        </View>
         </View>
       </View>
     );
@@ -188,6 +189,11 @@ export function EmailsList({ emails, score, updateScore, removeEmail, endGame, g
 }
 
 const styles = StyleSheet.create({
+  emailLineBody: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   button: {
     justifyContent: 'center',
     height: 100,
@@ -204,63 +210,56 @@ const styles = StyleSheet.create({
     width: '80%',
     justifyContent: 'center',
     alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
     elevation: 5,
   },
-  emailContent: {
-    flex: 1,
-    padding: 20,
-  },
   emailMain: {
-    fontSize: 18,
-    color: '#ECF0F1',
-    lineHeight: 24,
-    textAlign: 'center',
-    padding: 10,
+    flex: 0.2,
+    flexDirection: 'column',
+    height: 500,
+    color: 'white',
   },
   emailSender: {
-    fontSize: 16,
+    flex: 0.23,
+    fontSize: 20,
     fontWeight: 'bold',
     marginRight: 10,
     marginLeft: 10,
-    color: '#ECF0F1',
+    color: 'white',
   },
   emailLine: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flex: 0.74,
   },
   emailSubject: {
+    flex: 0.8,
     fontSize: 14,
-    color: '#ECF0F1',
+    color: 'white',
+    fontWeight: 'bold',
   },
   emailBody: {
-    fontSize: 16,
-    color: '#FF4500', // A bright orange-red color for fire
+    flex: 1.2,
+    fontSize: 14,
+    color: 'white',
   },
   emails: {
     flex: 1,
     flexDirection: 'column',
   },
   emailBox: {
-    padding: 10,
+    flex: 0.1,
     borderBottomWidth: 1,
-    borderColor: '#555',
-    backgroundColor: 'rgba(0,0,0,0.2)',
+    borderColor: 'black',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    flexDirection: 'row',
   },
   container: {
     flex: 1,
     flexDirection: 'column',
-    width: '100%',
-    height: '100%',
+    backgroundColor: 'grey',
+    width: '80%',
+    borderColor: 'black',
     borderRadius: 10,
-    borderWidth: 0,
-    overflow: 'hidden',
+    borderWidth: 5,
   },
   closeRegion: {
     flex: 0.9,
