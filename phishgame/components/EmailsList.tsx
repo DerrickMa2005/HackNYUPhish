@@ -1,11 +1,13 @@
+
 import { Text, View, StyleSheet, Modal, TouchableOpacity, Image } from 'react-native';
-import React, { useState } from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
+import React from 'react';
+import { useState } from 'react';
 
 interface EmailPopProp {
     isVisible: boolean;
     children: React.ReactNode;
-    onClose: () => void;
+    onClose: (answer: boolean) => void;
 }
 
 const EmailPop = ({ isVisible, children, onClose }: EmailPopProp) => {
@@ -14,7 +16,7 @@ const EmailPop = ({ isVisible, children, onClose }: EmailPopProp) => {
             animationType="slide"
             transparent={true}
             visible={isVisible}
-            onRequestClose={onClose}
+            onRequestClose={() => onClose(false)}
         >
             <View style={styles.outerEmail}>
                 <View style={styles.openEmail}>
@@ -24,20 +26,28 @@ const EmailPop = ({ isVisible, children, onClose }: EmailPopProp) => {
                     >
                         <Text style={styles.emailMain}>{children}</Text>
                         <View style={styles.closeRegion}>
+
                             <TouchableOpacity onPress={onClose}>
+                               
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={onClose}>
+                            
+                            </TouchableOpacity>
+
+                            <TouchableOpacity onPress={() => onClose(true)}>
                                 <Image
                                     source={require('@/assets/images/yes-button.png')}
                                     style={styles.button}
                                     resizeMode="contain"
                                 />
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={onClose}>
+                                </TouchableOpacity>
+                            <TouchableOpacity onPress={() => onClose(false)}>
                                 <Image
                                     source={require('@/assets/images/no-button.png')}
                                     style={styles.button}
                                     resizeMode="contain"
                                 />
-                            </TouchableOpacity>
+                          </TouchableOpacity>
                         </View>
                     </LinearGradient>
                 </View>
@@ -50,14 +60,19 @@ interface EmailProps {
     index: number;
     info : JSON;
     updateScore: (input : number) => void;
+    updateList: (index: number) => void;
 }
 
-const Email = ({index, info, updateScore} : EmailProps) => {
+const Email = ({index, info, updateScore, updateList} : EmailProps) => {
     const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
     const onModalOpen = () => {
         setIsModalVisible(true);
     } 
-    const closeModal = () => {
+    const closeModal = (answer: boolean) => {
+        if (answer !== (info.phish_or_not === "\"phish\"")) {
+            updateScore(parseInt(info.lives_lost_if_wrong));
+        }
+        updateList(index);
         setIsModalVisible(false);
     }
     const content = info.body + info.call_to_action;
@@ -84,17 +99,21 @@ interface EmailsListProps {
 export function EmailsList({emails, updateScore} : EmailsListProps) {
     const emailList = new Array(10);
     for (let i = 0; i < 10; i++) {
-        emailList[i] = emails.body[i];
+        emailList[i] = {id: i, info: emails.body[i]};
+    }
+    const [allEmail, setEmailList] = useState(emailList);
+    const updateList = (index: number) => {
+        setEmailList(allEmail.filter(a => a.id !== index))
     }
     return (
         <View style={styles.emails}>
-            {emailList.map((email, index) => (
-                <Email key={index} index={index} info = {email} updateScore={updateScore}/>
+            {allEmail.map((email, _) => (
+                <Email key={email.id} index={email.id}
+                info = {email.info} updateScore={updateScore} updateList = {updateList}/>
             ))}
         </View>
     );
 }
-
 const styles = StyleSheet.create({
     button: {
         justifyContent: 'center',
