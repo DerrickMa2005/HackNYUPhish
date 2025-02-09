@@ -11,8 +11,12 @@ const Tag = ({difficulty, isSelected, onPress} : TagsProps) => {
     require('@/assets/images/Phishmediate.png'), 
     require('@/assets/images/PhishMaster.png'),
   require('@/assets/images/PhishNoobSelect.png'),
-  require('@/assets/images/PhishmediateSelect.png'),
+  require('@/assets/images/PhishMediateSelecter.png'),
   require('@/assets/images/PhishMasterSelect.png')];
+
+  const getTextColor = () => {
+    return { color: isSelected  ? '#b85675' :  'white' }; // Default color for others
+  };
 
   return (
     <TouchableOpacity onPress={onPress} style={isSelected ? styles.selectedTagBox : styles.tagBox}>
@@ -20,7 +24,7 @@ const Tag = ({difficulty, isSelected, onPress} : TagsProps) => {
       source = {imageUrls[difficulty + (isSelected ? 3 : 0)]}
       style={styles.Icon}
       />
-      <Text>{difficulty === 0 ? 'Phish Noob' : difficulty=== 1 ? 'Phismediate' : 'Phish Master'} </Text>
+      <Text style = {[getTextColor(), styles.tagText]}>{difficulty === 0 ? 'Phish Noob' : difficulty=== 1 ? 'Phismediate' : 'Phish Master'} </Text>
     </TouchableOpacity>
   );
 }
@@ -80,5 +84,9 @@ const styles = StyleSheet.create({
         height: 25,
         marginLeft: 5,
         marginRight: 10,
+      },
+      tagText: {
+        fontSize: 16,
+        fontWeight: 'bold',
       },
     });

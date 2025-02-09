@@ -1,7 +1,6 @@
 import { TagsList } from '@/components/TagsList';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
 import { Text, View, StyleSheet, Image, TextInput, TouchableOpacity} from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
 import React from 'react';
 import { useState } from 'react';
@@ -12,35 +11,56 @@ export default function HomeScreen() {
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.container}>
-        <View style={styles.header}>
+        <LinearGradient
+          colors={['#29293D', '#14141F']} // Gradient from dark grey-blue to white for the whole page
+          style={styles.gradientContainer} 
+        >
+           {/* Header with a gradient */}
+          <LinearGradient
+            colors={['#249F9C', '#E514AC']} // Gradient for the header
+            style={styles.header}
+          >
             <Text style={styles.title}>Phishgame</Text>
             <View style={styles.searchBar}> 
               <Image
-              source={require('@/assets/images/search-icon.png')}
-              style={styles.searchIcon}
-            />
-            <TextInput
-              style={styles.search}
-              placeholder="Search">
-                </TextInput>
+                source={require('@/assets/images/black-search-icon.png')}
+                style={[styles.searchIcon, {width: 15, height: 15}]}
+                resizeMode="contain"
+              />
+              <TextInput
+                style={styles.search}
+                placeholder="Search"
+              />
             </View>
-            
-        </View>
-        <View style={styles.body}>
-          <View style={styles.sidebar}>
-          <Image
-              source={require('@/assets/images/search-icon.png')}
-              style={styles.searchIcon}
-            />
-          </View>
-          <View style={styles.main}>
-            <TagsList difficulty = {difficulty} selectIndex = {setDifficulty}/>
-            <View style={styles.emails}>
+          </LinearGradient>
 
+          <View style={styles.body}>
+            <View style={styles.sidebar}> {/* No gradient here, it will inherit the gradient from the parent */}
+              <Image
+                source={require('@/assets/images/Green_Menu_Icon.png')}
+                style={[styles.searchIcon, {marginTop: 100 }]}
+              />
+              <Image
+                source={require('@/assets/images/How-To-Play-Question-Mark.png')}
+                style={[styles.searchIcon, {marginTop: 200 }]}
+                resizeMode="contain"
+                />
+              <Image
+                source={require('@/assets/images/about.png')}
+                style={[styles.searchIcon, {marginTop: 200 }]}
+                resizeMode="contain"
+              
+              />
+            </View>
+            <View style={styles.main}>
+              <TagsList difficulty={difficulty} selectIndex={setDifficulty} />
+              <View style={styles.emails}>
+                {/* Add your email-related content here */}
+              </View>
             </View>
           </View>
-        </View>
-        </SafeAreaView>
+        </LinearGradient>
+      </SafeAreaView>
     </SafeAreaProvider>
   );
 }
@@ -49,10 +69,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  gradientContainer: {
+    flex: 1,
+  },
   header: {
     flex: 0.05,
-    color: 'black',
-    backgroundColor: 'white',
+    color: '#249F9C',
+    backgroundColor: '#249F9C',
     alignItems: 'center',
     justifyContent: 'flex-start',
     padding: 15,
@@ -64,6 +87,7 @@ const styles = StyleSheet.create({
     flex: 0.3,
     fontSize: 20,
     fontWeight: 'bold',
+    color: "#EEEEEE",
   },
   searchBar: {
     backgroundColor: '#D3D3D3',
@@ -75,8 +99,8 @@ const styles = StyleSheet.create({
     height: 40,
   },
   searchIcon: {
-    width: 15,
-    height: 15,
+    width: 30,
+    height: 30,
     marginLeft: 5,
     marginTop: 12,
     marginRight: 5,
@@ -92,7 +116,7 @@ const styles = StyleSheet.create({
   },
   sidebar: {
     flex: 0.05,
-    backgroundColor: '#D3D3D3',
+    backgroundColor: 'transparent', // Inherit gradient from parent
     borderColor: 'black',
     borderRightWidth: 1,
     flexDirection: 'column',
