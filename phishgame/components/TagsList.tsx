@@ -71,7 +71,6 @@ const styles = StyleSheet.create({
         borderColor: 'black',
         borderRightWidth: 1,
         backgroundColor: 'light-grey',
-        textDecorationLine: 'underline',
         flexDirection: 'row',
       },
       Icon: {

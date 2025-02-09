@@ -121,16 +121,16 @@ export default function HomeScreen() {
             <View style={styles.sidebar}>
               <Image
                 source={require('@/assets/images/Green_Menu_Icon.png')}
-                style={[styles.searchIcon, { marginTop: 100 }]}
+                style={styles.searchIcon}
               />
               <Image
                 source={require('@/assets/images/How-To-Play-Question-Mark.png')}
-                style={[styles.searchIcon, { marginTop: 200 }]}
+                style={styles.searchIcon}
                 resizeMode="contain"
               />
               <Image
                 source={require('@/assets/images/about.png')}
-                style={[styles.searchIcon, { marginTop: 200 }]}
+                style={styles.searchIcon}
                 resizeMode="contain"
               />
             </View>
@@ -149,20 +149,22 @@ export default function HomeScreen() {
               {gameStarted && (<EmailsList emails={displayedEmails} score = {score} 
               updateScore={updateScore} removeEmail={removeEmail} 
               endGame = {setGameStarted} generated = {gameGenerated}/>)}
+              {!gameStarted && (
+              <View style={styles.startScreen}>
+                 <Text style={[styles.mainTitle, { fontFamily: 'custom-font' }]}>Phishgame</Text>
+                 <Text style={styles.caption}>A Game Designed to Teach Users How to Detect Phishing Emails...</Text>
+                  <TouchableOpacity style={styles.centerButton} onPress={preGenerateEmails}>
+                    <Text style={styles.buttonText}>
+                      {isPreGenerating ? 'Pre-Generating...' : 'Pre-Generate Emails'}
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.centerButton} onPress={handleStartGame}>
+                    <Text style={styles.buttonText}>Start Game</Text>
+                  </TouchableOpacity>
+                </View>
+              )}
             </View>
           </View>
-          {!gameStarted && (
-            <BlurView intensity={50} tint="dark" style={styles.overlay}>
-              <TouchableOpacity style={styles.centerButton} onPress={preGenerateEmails}>
-                <Text style={styles.buttonText}>
-                  {isPreGenerating ? 'Pre-Generating...' : 'Pre-Generate Emails'}
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.centerButton} onPress={handleStartGame}>
-                <Text style={styles.buttonText}>Start Game</Text>
-              </TouchableOpacity>
-            </BlurView>
-          )}
         </LinearGradient>
       </SafeAreaView>
     </SafeAreaProvider>
@@ -190,6 +192,17 @@ const styles = StyleSheet.create({
     flex: 0.45,
     fontSize: 20,
     fontWeight: 'bold',
+    color: '#EEEEEE',
+  },
+  mainTitle: {
+    flex: 0.45,
+    fontSize: 100,
+    fontWeight: 'bold',
+    color: '#EEEEEE',
+  },
+  caption : {
+    fontSize: 20,
+    marginBottom: 20,
     color: '#EEEEEE',
   },
   searchBar: {
@@ -227,28 +240,25 @@ const styles = StyleSheet.create({
     borderColor: 'black',
     borderRightWidth: 1,
     alignItems: 'center',
-    justifyContent: 'flex-start',
+    justifyContent: 'space-evenly',
   },
   main: {
     flex: 0.95,
     flexDirection: 'column',
   },
-  overlay: {
-    position: 'absolute',
-    top: '30%',
-    bottom: '30%',
-    left: 0,
-    right: 0,
-    justifyContent: 'center',
+  startScreen: {
+    flex: 1,
     alignItems: 'center',
-    
+    justifyContent: 'center',
   },
   centerButton: {
     backgroundColor: 'rgba(255,255,255,0.8)',
+    width: 400,
     paddingVertical: 15,
     paddingHorizontal: 25,
     borderRadius: 10,
-    marginVertical: 10,
+    alignItems: 'center',
+    margin: 10,
   },
   buttonText: {
     fontSize: 16,
