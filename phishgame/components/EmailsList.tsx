@@ -1,6 +1,7 @@
 import { Text, View, StyleSheet, Modal, TouchableOpacity, Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useState } from 'react';
+import { useFonts } from 'expo-font';
 
 interface CorrectionPopProp {
   isVisible: boolean;
