@@ -1,56 +1,90 @@
-import { Text, View, StyleSheet, Modal,  TouchableOpacity, Pressable} from 'react-native';
+
+import { Text, View, StyleSheet, Modal, TouchableOpacity, Image } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
 import { useState } from 'react';
 
 interface EmailPopProp {
     isVisible: boolean;
     children: React.ReactNode;
-    onClose: () => void;
+    onClose: (answer: boolean) => void;
 }
 
-const EmailPop = ({isVisible, children, onClose} : EmailPopProp) => {
+const EmailPop = ({ isVisible, children, onClose }: EmailPopProp) => {
     return (
         <Modal
             animationType="slide"
             transparent={true}
             visible={isVisible}
-            onRequestClose={onClose}
+            onRequestClose={() => onClose(false)}
         >
-            <View style = {styles.container}>
-                <View style={styles.closeRegion}>
-                        <Pressable onPress={onClose} style={styles.closeButton}>
-                            X</Pressable>
-                    </View>
-                    <text style={styles.emailMain}>{children}</text>
+            <View style={styles.outerEmail}>
+                <View style={styles.openEmail}>
+                    <LinearGradient
+                        colors={['#9C3F49', '#14141F']}
+                        style={styles.container}
+                    >
+                        <Text style={styles.emailMain}>{children}</Text>
+                        <View style={styles.closeRegion}>
+
+                            <TouchableOpacity onPress={onClose}>
+                               
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={onClose}>
+                            
+                            </TouchableOpacity>
+
+                            <TouchableOpacity onPress={() => onClose(true)}>
+                                <Image
+                                    source={require('@/assets/images/yes-button.png')}
+                                    style={styles.button}
+                                    resizeMode="contain"
+                                />
+                                </TouchableOpacity>
+                            <TouchableOpacity onPress={() => onClose(false)}>
+                                <Image
+                                    source={require('@/assets/images/no-button.png')}
+                                    style={styles.button}
+                                    resizeMode="contain"
+                                />
+                          </TouchableOpacity>
+                        </View>
+                    </LinearGradient>
+                </View>
             </View>
         </Modal>
     );
-}
+};
 
 interface EmailProps {
     index: number;
-    send : string;
-    subject : string;
-    content : string;
+    info : JSON;
+    updateScore: (input : number) => void;
+    updateList: (index: number) => void;
 }
 
-const Email = ({index, send, subject, content} : EmailProps) => {
+const Email = ({index, info, updateScore, updateList} : EmailProps) => {
     const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
     const onModalOpen = () => {
         setIsModalVisible(true);
     } 
-    const closeModal = () => {
+    const closeModal = (answer: boolean) => {
+        if (answer !== (info.phish_or_not === "\"phish\"")) {
+            updateScore(parseInt(info.lives_lost_if_wrong));
+        }
+        updateList(index);
         setIsModalVisible(false);
     }
+    const content = info.body + info.call_to_action;
     return (
         <TouchableOpacity
                 onPress={onModalOpen} style={styles.emailBox}>
-            <Text style={styles.emailSender}>{send.length > 15 ? send.slice(0, 15) : send}</Text>
+            <Text style={styles.emailSender}>{info.topic.length > 15 ? info.topic.slice(0, 15) : info.topic}</Text>
             <View style={styles.emailLine}>
-                <Text style={styles.emailSubject}>{subject}</Text>
-                <Text style={styles.emailBody}>{" - " + content.slice(0, 125).replace(/(\r\n|\n|\r)/gm, "")}</Text>
+                <Text style={styles.emailSubject}>{info.subject}</Text>
+                <Text style={styles.emailBody}>{" - " + content.slice(0, 160).replace(/(\r\n|\n|\r)/gm, "")}</Text>
                 <EmailPop isVisible={isModalVisible} onClose={closeModal}>
-                    <Text>{content}</Text>
+                    <Text style={styles.openEmail}>{content}</Text>
                 </EmailPop>
             </View>
         </TouchableOpacity>
@@ -60,25 +94,48 @@ const Email = ({index, send, subject, content} : EmailProps) => {
 
 interface EmailsListProps {
     emails : JSON;
+    updateScore: (input : number) => void;
 }
-export function EmailsList({emails} : EmailsListProps) {
+export function EmailsList({emails, updateScore} : EmailsListProps) {
     const emailList = new Array(10);
     for (let i = 0; i < 10; i++) {
-        emailList[i] = emails.body[i];
+        emailList[i] = {id: i, info: emails.body[i]};
+    }
+    const [allEmail, setEmailList] = useState(emailList);
+    const updateList = (index: number) => {
+        setEmailList(allEmail.filter(a => a.id !== index))
     }
     return (
         <View style={styles.emails}>
-            {emailList.map((email, index) => (
-                <Email key={index} index={index} send={email.topic} subject={email.topic} 
-                content={email.body + email.call_to_action}/>
+            {allEmail.map((email, _) => (
+                <Email key={email.id} index={email.id}
+                info = {email.info} updateScore={updateScore} updateList = {updateList}/>
             ))}
         </View>
     );
 }
-
 const styles = StyleSheet.create({
+    button: {
+        justifyContent: 'center',
+        marginTop: 250,
+        height: 400,
+        width: 400,
+    },
+    outerEmail: {
+        height: '100%',
+        flexDirection: 'column',
+        justifyContent: 'center',
+    },
+    openEmail: {
+        height: 400,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
     emailMain: {
-        flex: 0.87,
+        flex: 0.2,
+        flexDirection: 'column',
+        height: 500,
+        color: 'white',
     },
     emailSender: {
         flex: 0.13,
@@ -86,6 +143,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginRight: 10,
         marginLeft: 10,
+        color: 'white',
     },
     emailLine: {
         flex: 0.87,
@@ -94,10 +152,11 @@ const styles = StyleSheet.create({
     },
     emailSubject: {
         fontSize: 12,
+        color: 'white',
     },
     emailBody: {
         fontSize: 10,
-        color: 'grey',
+        color: 'white',
     },
     emails: {
         flex: 1,
@@ -115,22 +174,41 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         backgroundColor: 'grey',
+        width: '80%',
+        borderColor: 'black',
+        borderRadius: 10,
+        borderWidth: 5,
     },
     closeRegion: {
         flex: 0.1,
         flexDirection: 'row',
-        justifyContent: 'flex-end',
+        justifyContent: 'center',
         alignItems: 'center',
+        height: 50,
+        margin: 20,
     },
-    closeButton: {
+    yesButton: {
         fontSize: 20,
         fontWeight: 'bold',
-        backgroundColor: 'white',
+        backgroundColor: 'green',
         borderWidth: 2,
         borderRadius: 10,
-        width: 40,
-        height: 40,
+        borderColor: 'black',
+        width: 150,
+        height: 50,
         textAlign: 'center',
         margin: 10,
-    }
+    },
+    noButton: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        backgroundColor: 'red',
+        borderWidth: 2,
+        borderRadius: 10,
+        width: 150,
+        height: 50,
+        textAlign: 'center',
+        margin: 10,
+        borderColor: 'black',
+    },
 });
