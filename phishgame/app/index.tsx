@@ -1,9 +1,9 @@
 import { TagsList } from '@/components/TagsList';
 import { EmailsList } from '@/components/EmailsList';
-import { Text, View, StyleSheet, Image, TextInput, TouchableOpacity, Modal} from 'react-native';
+import { Text, View, StyleSheet, Image, TextInput, TouchableOpacity, Modal, Linking} from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
-import React, { useState, useRef, useEffect } from 'react'; // Import useRef and useEffect
+import React, { useState, useRef, useEffect, useCallback } from 'react'; // Import useRef and useEffect
 import { useFonts } from 'expo-font';
 import phishingEmails from '@/generated_phishing_emails(1).json';
 import { Audio } from 'expo-av'; // Import Audio from expo-av
@@ -44,6 +44,14 @@ export default function HomeScreen() {
       }
     };
   }, []);
+  const handleLink = useCallback(async () => {
+    const supported = await Linking.canOpenURL("https://www.bleepingcomputer.com/tag/phishing/");
+    if (supported) {
+      await Linking.openURL("https://www.bleepingcomputer.com/tag/phishing/");
+    } else {
+      console.error('Cannot open URL:', "https://www.bleepingcomputer.com/tag/phishing/");
+    }
+  }, []);
   const [difficulty, setDifficulty] = useState(0);
   const [score, setScore] = useState(100);
   const [generatedEmails, setGeneratedEmails] = useState<any[]>([]);
@@ -67,7 +75,6 @@ export default function HomeScreen() {
     children: React.ReactNode;
     onClose: () => void;
   }
-  
   const Pop = ({ isVisible, children, onClose }: PopProp) => {
     return (
       <Modal
@@ -244,13 +251,13 @@ export default function HomeScreen() {
                 <Text style={styles.padding}>-$4.9 million is the average amount to recover from a phishing attack</Text>
                 <Text style={styles.padding}>-A quarter of phishing emails bypassed Office 365 Security in 2019</Text>
                 </View>
-              <View style={styles.graph}>
+              <TouchableOpacity style={styles.graph} onPress={handleLink}>
                   <Image
                     source={require('@/assets/images/phishgraph.png')}
                     style={{ width: 400, height: 300 }}
                     resizeMode="contain"
                   />
-              </View>
+              </TouchableOpacity>
               </View>
               </Pop>
             </View>
