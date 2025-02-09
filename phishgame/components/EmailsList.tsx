@@ -230,6 +230,9 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     height: 500,
     color: 'white',
+    fontSize: 13,
+    padding: 10,
+    margin: 10,
   },
   emailSender: {
     flex: 0.23,

@@ -1,0 +1,338 @@
+{
+    "phishnoob": [
+        {
+            "topic": "Server Status Update",
+            "sender_persona": "Che",
+            "subject": "Server is Operational Again",
+            "greeting": "Hello RPM-List members,",
+            "body": "I hope this message finds you well. I wanted to provide a quick update regarding the server that we discussed in our previous communications. I am pleased to inform you that the server mentioned above is operational again! It was down for a brief period, but the issue has been resolved, and everything is functioning as expected now. Thank you for your patience during this time. If you experience any further issues or have any questions, please feel free to reach out.",
+            "call_to_action": "Best regards, and let me know if you have any further questions!",
+            "phish_or_not": "\"Not Phish\"",
+            "lives_lost_if_wrong": 2,
+            "explanation_if_wrong": "The email you just read is not a phishing attempt. It is a legitimate communication from a member of the RPM-List mailing list, providing an update about the server's status. There are no suspicious links or requests for sensitive information, and the tone is professional and friendly, typical of community updates. Phishing attempts usually involve urgent requests for personal information or contain links to malicious sites, which is not the case here."
+        },
+        {
+            "topic": "Enron Investor Conference Updates",
+            "sender_persona": "Enron Investor Relations",
+            "subject": "Latest Updates from the Houston Investor Conference",
+            "greeting": "Hello Team,",
+            "body": "We are excited to share some key highlights from our recent participation in the Houston Investor Conference. As you may know, our team has been working diligently to provide our investors with the most up-to-date information and insights into our performance and future strategies. In this issue of eBiz, we cover our recent successes, including how we have outperformed market expectations, and what that means for the upcoming quarter.",
+            "call_to_action": "Visit our eBiz publication for more insights and updates.",
+            "phish_or_not": "\"Not Phish\"",
+            "lives_lost_if_wrong": 1,
+            "explanation_if_wrong": "If you thought this email was a phishing attempt, you may have misunderstood the context and intent behind it. This communication is a legitimate update from Enron's investor relations, aimed at providing stakeholders with essential information regarding the company's performance and regulatory changes. Recognizing such communications as authentic can help you stay informed and engaged with important developments in the investment landscape."
+        },
+        {
+            "topic": "\"Urgent Account Verification Needed!\"",
+            "sender_persona": "\"Your Friendly Bank Support Team\"",
+            "subject": "\"🚨 Immediate Action Required: Verify Your Account Now! 🚨\"",
+            "greeting": "\"Dear Valued Customer,\"",
+            "body": "\"We hope this message finds you well! Our security team has detected unusual activity in your bank account. To ensure the safety of your funds, we need you to verify your account information immediately. Please click the link below to confirm your identity: \\n\\n👉 http://example.com/verify-account \\n\\nFailure to verify your account within 24 hours will result in temporary suspension of access to your funds. We take your security very seriously and appreciate your prompt attention to this matter. \\n\\nThank you for being a valued customer! \\n\\nBest Regards, \\nYour Friendly Bank Support Team \\n\\nP.S. Don't forget, your security is our top priority! 💳\",",
+            "call_to_action": "\"Click here to verify your account NOW!\",",
+            "phish_or_not": "\"Phish\",",
+            "lives_lost_if_wrong": 0,
+            "explanation_if_wrong": "\"Oops! You fell for a phishing attempt. Always double-check the sender's email address and look for suspicious links before clicking!\""
+        },
+        {
+            "topic": "ENA Group Expenses Review",
+            "sender_persona": "David W. Delainey",
+            "subject": "ENA Group Expenses Guys, Notes from the Morning Meeting",
+            "greeting": "Hi Team,",
+            "body": "I hope this message finds you well. I'm reaching out to provide an update regarding the ENA group expenses that were discussed in our recent morning meeting. I apologize for any previous lack of clarity in the communications, and I appreciate your patience as we work through this.",
+            "call_to_action": "Please review and comment on the action items discussed.",
+            "phish_or_not": "\"Not Phish\"",
+            "lives_lost_if_wrong": 2,
+            "explanation_if_wrong": "This email is an authentic internal communication regarding group expenses and action items that require attention. It does not exhibit any phishing characteristics, such as urgency or requests for sensitive information. Misidentifying it as a phishing attempt could lead to unnecessary disruption in the workflow and loss of important insights from team members."
+        },
+        {
+            "topic": "Pricing and Transport Rates",
+            "sender_persona": "Sales Manager at Concorde Churchill",
+            "subject": "Competitive Transport Pricing for Meter 6461",
+            "greeting": "Dear Valued Customer,",
+            "body": "We are excited to share with you our updated pricing for the meter 6461 transport rates. After careful consideration and market analysis, we have developed a competitive pricing structure that we believe will benefit your operations. For volumes greater than 300 mm per day, the rate will be $0.35 per mm. For volumes of 300 mm per day or less, the rate will be $0.45 per mm, in addition to a monthly metering fee of $350.",
+            "call_to_action": "Contact us today to secure these rates!",
+            "phish_or_not": "\"Not Phish\"",
+            "lives_lost_if_wrong": 1,
+            "explanation_if_wrong": "This email is a legitimate offer for competitive transport pricing and does not contain any suspicious cues or requests for sensitive information. Choosing incorrectly may lead to missing out on valuable business opportunities."
+        },
+        {
+            "topic": "Daily Risk-Adjusted Return Graphs",
+            "sender_persona": "Eugenio Perez",
+            "subject": "Daily Updates on New Risk-Return Graphs",
+            "greeting": "Dear Team,",
+            "body": "I hope this message finds you well. I am pleased to share that we have created four new graphs that will be published daily alongside the Daily Performance Report (DPR). These graphs focus on important metrics related to risk-adjusted return, specifically: 1) Return on VAR (ROVAR); 2) Curve Shift P&L (Delta-Gamma); 3) Sharpe Ratio; and 4) Risk-Return (Large and Small). Each of these graphs provides insights into our risk characteristics across different markets we operate in.",
+            "call_to_action": "Please let us know if you have any questions or require further assistance with these graphs.",
+            "phish_or_not": "\"Not Phish\"",
+            "lives_lost_if_wrong": 2,
+            "explanation_if_wrong": "You've mistakenly identified a legitimate communication as a phishing attempt. This email was sent by Eugenio Perez and contains important updates regarding daily financial metrics and risk assessments that are crucial for our operations. Misidentifying such emails can hinder our ability to stay informed about our financial performance and risk management strategies."
+        },
+        {
+            "topic": "Finding More Channels",
+            "sender_persona": "Kevin Hemenway",
+            "subject": "Exploring RSS Feed Options",
+            "greeting": "Hello,",
+            "body": "I hope this message finds you well. I wanted to share some insights on how to effectively navigate the world of RSS feeds, a powerful tool for keeping up with news and updates from your favorite websites. As you may know, there are thousands of websites that offer their content in a format that applications like AmphetaDesk can understand. This makes it easier for users to stay informed without having to visit each site individually. However, with so many options available, it can be overwhelming to find the right channels to follow.",
+            "call_to_action": "Start exploring and find the RSS feeds that resonate with you!",
+            "phish_or_not": "\"Not Phish\"",
+            "lives_lost_if_wrong": 2,
+            "explanation_if_wrong": "If you mistakenly identify this email as a phishing attempt, you might miss out on valuable information about RSS feeds and how to utilize them effectively. This knowledge can enhance your online experience and help you stay connected with the content that matters most to you."
+        },
+        {
+            "topic": "\"Exclusive Offer Just for You! 🎉\"",
+            "sender_persona": "\"The Amazing Wellness Team\"",
+            "subject": "\"Unlock the Secret to Eternal Youth! 🌟\"",
+            "greeting": "\"Dear Esteemed Customer,\"",
+            "body": "\"We are thrilled to present you with a once-in-a-lifetime opportunity that you simply cannot miss! Have you ever dreamed of looking and feeling 20 years younger? Well, dream no more! Our revolutionary product, as seen on daytime television shows like Oprah and CNBC, is here to help you achieve that fabulous look and vitality you’ve always wanted!\\n\\nImagine waking up every morning full of energy, losing weight while you sleep, and even improving your memory! Sounds too good to be true? It’s not! Our amazing formula not only reduces wrinkles but also enhances your sexual potency and helps you gain lean muscle. \\n\\nBut wait, there’s more! For a limited time, we are offering an EXCLUSIVE discount for our loyal customers. All you have to do is click the link below to claim your special offer! Remember, this is only available for a short time, so act fast to avoid disappointment!\\n\\n👉 Click here to transform your life NOW: http://example.com 👈\\n\\nDon’t let this incredible chance slip through your fingers. You deserve to feel fabulous and look amazing. \\n\\nWe can’t wait to hear how our product changes your life! If you wish to be removed from our fabulous list, DO NOT reply to this email. Simply copy and paste the following link into your browser: infodele.com/nrmm.htm\\n\\nBest wishes for your health and happiness!\\n\\nThe Amazing Wellness Team\",",
+            "call_to_action": "\"Claim Your Discount Now! 🎯\",",
+            "phish_or_not": "\"Phish\",",
+            "lives_lost_if_wrong": 0,
+            "explanation_if_wrong": "\"Oops! You’ve fallen for a phishing attempt. This email was designed to trick you into clicking a suspicious link that could compromise your personal information. Always be cautious and verify the source before clicking any links.\""
+        },
+        {
+            "topic": "Lifetime Movie Newsletter",
+            "sender_persona": "Lifetime Entertainment",
+            "subject": "This Week's Movies to Watch on Lifetime",
+            "greeting": "Hello Lifetime Movie Fans,",
+            "body": "Welcome to this week's edition of the Lifetime Movie Newsletter! We're excited to bring you the latest films premiering on Lifetime, along with some powerful stories and events that highlight the impact of our films. This week, we are thrilled to announce the premiere of \"The Secret Life of Zoey,\" which delves into the serious issue of teenage drug addiction. Zoey's seemingly perfect life takes a drastic turn when her mother discovers her struggles with drugs. This captivating drama features renowned actors Mia Farrow, Andrew McCarthy, and Julia Whelan. Join us for a sneak peek at the movie airing on Monday, August 19 at 9 pm ET/PT.",
+            "call_to_action": "Stay tuned for all the exciting movies this week and let us know your thoughts on \"The Secret Life of Zoey\" in our message boards!",
+            "phish_or_not": "\"Not Phish\"",
+            "lives_lost_if_wrong": 1,
+            "explanation_if_wrong": "This email is a legitimate communication from Lifetime Entertainment, providing subscribers with updates on upcoming films. It contains no suspicious links or requests for personal information, making it a safe and informative newsletter for fans of Lifetime movies."
+        },
+        {
+            "topic": "\"Managing Repository Bandwidth\"",
+            "sender_persona": "\"Matthias Saou, System and Network Engineer\"",
+            "subject": "\"Re: Bandwidth Management for Repositories\"",
+            "greeting": "\"Hello Brian,\"",
+            "body": "\"I hope this message finds you well. I wanted to address your concern about managing the bandwidth of the repository you mentioned. It's great to hear that you are being thoughtful about bandwidth usage, especially having experienced the limitations of dial-up. As you now have access to fiber optic, you certainly have a better experience overall.\\n\\nTo manage the bandwidth effectively, you can configure your package manager to prioritize certain repositories over others. For instance, if you want to use the repository at apt.freshrpms.net, you can simply add the specific lines for that repository to your configuration. Make sure to include only the modules that you need. In your case, it sounds like you are looking at 'testing73'. This approach will help you avoid unnecessary bandwidth consumption while ensuring you have access to the necessary updates.\\n\\nIf you need further assistance setting this up, feel free to reach out. I'm here to help!\",",
+            "call_to_action": "\"Let me know if you have any other questions or need further clarification.\",",
+            "phish_or_not": "\"Not Phish\",",
+            "lives_lost_if_wrong": 0,
+            "explanation_if_wrong": "\"This email is a legitimate communication regarding repository management and does not contain any suspicious elements or requests. There are no indications of phishing, such as requests for sensitive information or links to fraudulent sites.\""
+        }
+    ],
+    "phishdisciple": [
+        {
+            "topic": "Methanol Plant Downtime Notification",
+            "sender_persona": "Operations Manager",
+            "subject": "Notification of Methanol Plant Downtime",
+            "greeting": "Dear Team,",
+            "body": "We would like to inform you that the methanol plant experienced an operational upset early this morning, around 5 a.m. Due to this incident, the plant is currently down and will not be operational until late Friday, March 24. We understand the importance of the methanol production to our operations and are actively working to resolve the issues as quickly and safely as possible. Our technical team is assessing the situation and implementing necessary measures to ensure that we can resume normal operations without further delays. We appreciate your understanding during this period and will keep you updated with any significant changes or developments. Please ensure that all relevant departments are aware of this downtime and adjust their operations accordingly. If you have any questions or require further information, do not hesitate to reach out.",
+            "call_to_action": "Please stay tuned for further updates regarding the plant status.",
+            "phish_or_not": "\"Not Phish\"",
+            "lives_lost_if_wrong": 2,
+            "explanation_if_wrong": "This notification is a legitimate communication regarding a temporary operational issue at the methanol plant. It is crucial for maintaining safety and efficiency in our operations. Misjudging this communication could lead to unnecessary panic or mismanagement of resources during this downtime."
+        },
+        {
+            "topic": "Urgent Account Verification Needed!",
+            "sender_persona": "Account Security Team",
+            "subject": "Immediate Action Required: Verify Your Account",
+            "greeting": "Dear Valued User,",
+            "body": "We hope this message finds you well. Our records indicate that there has been unusual activity detected on your account. To ensure your account's security, we require your immediate attention to verify your information. 🔒\\n\\nPlease click the link below to confirm your account details and prevent any potential interruptions in service:\\nhttp://example.com\\n\\nFailure to verify your account within the next 24 hours may result in temporary suspension of your account. We understand that these measures can be concerning, but they are essential to protect your personal information and maintain the integrity of our services. \\n\\nIf you have any questions or need assistance, please do not hesitate to reach out to our support team.\\n\\nThank you for your prompt attention to this matter. Your security is our top priority! 😊\\n\\nBest regards,\\nAccount Security Team\\nYour Trusted Service Provider",
+            "call_to_action": "Click here to verify your account now!",
+            "phish_or_not": "\"Phish\"",
+            "lives_lost_if_wrong": 14,
+            "explanation_if_wrong": "The email appears legitimate at first glance, but it contains subtle cues indicating it is a phishing attempt. The urgency, vague language about \"unusual activity,\" and the generic sender name are all red flags. Additionally, the link provided directs to a potentially harmful website. Always verify the sender's address and never click on links in unsolicited emails."
+        },
+        {
+            "topic": "Cargo Vessel Incident in South Africa",
+            "sender_persona": "Maritime News Network",
+            "subject": "Urgent Update: Cargo Vessel Ran Aground in South Africa",
+            "greeting": "Dear Maritime Community,",
+            "body": "We are reaching out to provide an urgent update regarding a significant incident involving a cargo vessel that has run aground off the coast of a World Heritage conservation site in South Africa. This incident has raised serious environmental concerns and is currently under investigation by local authorities and maritime experts. The vessel, which remains unnamed at this time, became stranded due to adverse weather conditions that have also resulted in raging fires on board. These fires are complicating salvage efforts and raising alarms about potential environmental damage to the surrounding marine ecosystem.",
+            "call_to_action": "Stay tuned for further updates and consider participating in our upcoming webinar on maritime safety and environmental protection.",
+            "phish_or_not": "\"Not Phish\"",
+            "lives_lost_if_wrong": 3,
+            "explanation_if_wrong": "If you incorrectly classify this email as a phishing attempt, you may miss out on important information regarding maritime safety and environmental conservation, which could lead to misunderstandings and a lack of preparedness in similar situations."
+        },
+        {
+            "topic": "\"Unlock the Secrets of Effective Email Marketing!\"",
+            "sender_persona": "\"Marketing Guru Daniel\"",
+            "subject": "\"Transform Your Business with Our Exclusive Marketing Insights!\"",
+            "greeting": "\"Hello Valued Entrepreneur,\"",
+            "body": "\"I hope this message finds you well! My name is Daniel, and I've been immersed in the world of Internet Marketing for over a decade. 🚀 I understand how overwhelming the digital landscape can be, especially when trying to navigate the complexities of email marketing. That's why I’m reaching out to share some valuable insights that could revolutionize your advertising strategies!\\n\\nIn today's fast-paced business environment, time is of the essence. Most entrepreneurs are so caught up in daily operations that they often overlook the power of effective marketing techniques. If you’re looking for a way to increase your client base, maximize your reach, and ultimately boost your revenue, I have just the solution for you!\\n\\nOur team at LCM specializes in providing tailored email marketing solutions that ensure your advertisements reach millions of potential customers worldwide. Imagine having a marketing campaign that not only saves you time but also guarantees impressive results! 🌟 \\n\\nThe best part? We offer a unique service that acquires targeted email addresses on a per-request basis. This means you’re not getting outdated lists; instead, you receive fresh, real-time data that can empower your marketing efforts. Our average turnaround time is just 3-5 days, ensuring you’re always ahead of the competition.\\n\\nI know what you’re thinking: \\\"How can this possibly work for my business?\\\" Well, the answer is simple. Our custom-designed software applications are crafted to deliver your advertisements efficiently and effectively, regardless of your target audience size. Whether you’re aiming to connect with 50,000 or even 50 million consumers, we’re here to help you launch a successful campaign!\\n\\nIf you’re intrigued and want to learn more about our services, simply reply with the words \\\"Tell Me More\\\" in the subject line. I promise you won’t regret it! Your chance to unlock the secrets of successful email marketing is just a click away.\\n\\nDon’t let this opportunity slip through your fingers! Your business deserves the best, and we’re here to provide it. \\n\\nLooking forward to hearing from you soon! \\n\\nBest regards,\\nDaniel\\nMarketing Consultant at LCM\",",
+            "call_to_action": "\"Reply with 'Tell Me More' and take the first step towards transforming your marketing strategy!\",",
+            "phish_or_not": "\"Phish\",",
+            "lives_lost_if_wrong": 0,
+            "explanation_if_wrong": "\"This email is a phishing attempt designed to lure you into sharing your personal information under the guise of marketing assistance. Always verify the sender and be cautious of unsolicited offers.\""
+        },
+        {
+            "topic": "\"Account Verification Required\"",
+            "sender_persona": "\"Your Trusted Service Team\"",
+            "subject": "\"Immediate Action Required: Account Verification Needed! 🔒\"",
+            "greeting": "\"Dear Valued User,\"",
+            "body": "\"We hope this message finds you well. As part of our ongoing commitment to ensure the security of your account, we have detected unusual activity that requires your immediate attention. To maintain the integrity of your account, we kindly ask you to verify your identity.\\n\\nPlease click the link below to access our secure verification portal and confirm your account details:\\n\\n👉 [Verify My Account](http://example.com) 👈\\n\\nFailure to complete this verification within 24 hours may result in temporary suspension of your account to protect your information. We understand that this may seem inconvenient, but your security is our top priority.\\n\\nIf you did not initiate this request or believe this to be an error, please contact our support team immediately for assistance. Thank you for your prompt attention to this matter, and for being a valued member of our community.\\n\\nBest regards,\\nThe Trusted Service Team\\n\\nP.S. Don't hesitate to reach out if you have any questions!\"",
+            "call_to_action": "\"Verify My Account Now\"",
+            "phish_or_not": "\"Phish\"",
+            "lives_lost_if_wrong": 12,
+            "explanation_if_wrong": "\"This email is a phishing attempt designed to trick you into providing your personal information. The link leads to a fraudulent site that could compromise your account and personal data.\""
+        },
+        {
+            "topic": "\"Campaign Against Adult Pay-Per-View Content\"",
+            "sender_persona": "\"Pro-Family Group\"",
+            "subject": "\"Join Our Nationwide Campaign to Curb Adult Content\"",
+            "greeting": "\"Dear Supporter,\"",
+            "body": "\"We are excited to announce that our grassroots initiative in Cincinnati is gaining momentum! Our pro-family group has successfully pressured two local hotels to cease the showing of adult pay-per-view movies, and we believe it's time to expand this important campaign across the nation.\\n\\nOur mission is to promote family values and protect children from exposure to inappropriate content. We understand that these adult movies can have detrimental effects on families and the community as a whole. Therefore, we are rallying supporters like you to join us in this fight.\\n\\nWe know that this isn't just about two hotels in our city; it's about sending a message to all businesses that we will not stand for the normalization of adult content in public spaces. We believe that families deserve environments that foster healthy relationships and uphold moral standards.\\n\\nAs part of our campaign, we will be reaching out to hotels, motels, and other establishments across the country, urging them to reconsider their policies on adult pay-per-view offerings. We are also working on organizing local events to raise awareness and gather signatures for petitions that will be presented to hotel management and local governments.\\n\\nIn the coming weeks, we will provide you with more information on how you can get involved. Whether it's sharing our message on social media, volunteering at events, or simply spreading the word to your friends and family, every bit of support counts. Together, we can make a difference and create a safer environment for our children.\",",
+            "call_to_action": "\"Stay tuned for more updates and find out how you can support our mission!\"",
+            "phish_or_not": "\"Not Phish\"",
+            "lives_lost_if_wrong": 3,
+            "explanation_if_wrong": "\"If you mistakenly identify this email as a phishing attempt, you may overlook a genuine call to action from a pro-family organization seeking to protect family values and promote healthy environments for children.\""
+        },
+        {
+            "topic": "Enron CFO Replacement Amid SEC Inquiry",
+            "sender_persona": "Corporate Communications Team, Enron Corporation",
+            "subject": "Announcement: New Chief Financial Officer Appointed",
+            "greeting": "Dear Valued Stakeholders,",
+            "body": "We are writing to inform you of a significant leadership change at Enron Corporation. Effective immediately, Andrew Fastow has been removed from his position as Chief Financial Officer (CFO) and has been placed on a leave of absence. In his stead, we are pleased to announce that Jeffrey McMahon, who has been leading our Industrial Markets Division, will assume the role of CFO.",
+            "call_to_action": "For any questions or further information, please do not hesitate to reach out to our Investor Relations department.",
+            "phish_or_not": "\"Not Phish\"",
+            "lives_lost_if_wrong": 3,
+            "explanation_if_wrong": "You may have misinterpreted this communication as phishing due to the sensitive nature of the content. However, this message is a legitimate corporate communication intended to inform stakeholders of important changes within the company during a challenging time."
+        },
+        {
+            "topic": "Linux User Group Discussion",
+            "sender_persona": "John P. Looney",
+            "subject": "Re: [ILUG] Fwd: Linux Beer Hike",
+            "greeting": "Hi everyone,",
+            "body": "I hope this message finds you well. I wanted to contribute to the ongoing discussion about the Linux Beer Hike. It's always great to see fellow enthusiasts coming together to share knowledge and enjoy good company. I understand that learning new things can sometimes feel forced, but I believe that we can approach it with a sense of curiosity and openness. The world of Linux is vast, and there’s always something new to discover. By the way, I was reminiscing about my childhood the other day, and it made me think about how learning has shaped our lives in unexpected ways. If anyone has stories or experiences to share, I’d love to hear them.",
+            "call_to_action": "Please feel free to reply with your thoughts or experiences!",
+            "phish_or_not": "\"Not Phish\"",
+            "lives_lost_if_wrong": 1,
+            "explanation_if_wrong": "This email is a genuine communication among members of a Linux user group, discussing their shared interests. It does not contain any suspicious links, requests for personal information, or other common signs of phishing attempts. If you mistakenly identified this as a phishing email, it could lead to misunderstandings within the community and detract from the valuable interactions we have."
+        },
+        {
+            "topic": "\"Global Markets Limit Changes\"",
+            "sender_persona": "\"Cassandra Schultz, Enron Risk Management\"",
+            "subject": "\"Approved Limit Changes for Global Markets - Effective February 13, 2001\"",
+            "greeting": "\"Dear Team,\"",
+            "body": "\"I hope this message finds you well. I am writing to inform you about the recent changes approved by the Board of Directors regarding trading limits for our Global Markets division. These changes will take effect on Tuesday, February 13, 2001.\\n\\nEnclosed below are the new limits alongside the existing limits for various commodity groups:\\n\\n1. **Equity Trading**\\n   - Net Open Position Limit: $200 million (previously $100 million)\\n   - VAR Limit: $10 million (previously $6 million)\\n\\n2. **Convertible Arbitrage**\\n   - Net Open Position Limit: $150 million\\n   - VAR Limit: $2 million\\n\\n3. **Financial Instruments**\\n   - Foreign Currency: Net Open Position Limit: $150 million (previously $100 million)\\n   - Interest Rate: Net Open Position Limit: $250,000/bp (previously $100,000/bp)\\n\\n4. **Soft Commodities**\\n   - Net Open Position Limit: 4,000 contracts (previously 2,000 contracts)\\n   - VAR Limit: $2 million (previously $0.75 million)\\n\\n5. **Grains**\\n   - Net Open Position Limit: 750 contracts (previously 1,000 contracts)\\n   - VAR Limit: $0.5 million\\n\\n6. **Meats**\\n   - Net Open Position Limit: 750 contracts\\n   - VAR Limit: $0.5 million (previously $0.75 million)\\n\\n7. **Weather Derivatives**\\n   - Net Open Position Limit: 40,000 EOL equivalent contracts\\n   - VAR Limit: $4.5 million (previously $3 million)\\n\\n8. **Coal and Freight**\\n   - Net Open Position Limit: 30 million metric tons (previously 15 million metric tons)\\n   - VAR Limit: $7 million (previously $4 million)\\n\\n9. **Global Products**\\n   - Net Open Position Limit: 18 million barrels (previously 12.5 million barrels)\\n   - VAR Limit: $15 million (previously $8 million)\\n\\n10. **LNG**\\n    - Net Open Position Limit: 9 BCF\\n    - VAR Limit: $5 million\\n\\nPlease note that some limits have been combined to establish higher-level limits across different trading desks. This approach aims to streamline our trading strategy and enhance our risk management framework.\\n\\nIf you have any questions regarding these changes or how they might affect your trading activities, feel free to reach out to me directly or contact Bjorn Hagelman or David Port as listed below:\\n\\n- **Bjorn Hagelman:** x57984\\n- **David Port:** x39823\\n\\nThank you for your attention to this important matter. Let’s continue to work together to ensure our trading activities align with these new limits and maintain our commitment to prudent risk management.\",",
+            "call_to_action": "\"Please review the attached limits and ensure that your trading strategies are adjusted accordingly. Contact us if you have any questions.\",",
+            "phish_or_not": "\"Not Phish\"",
+            "lives_lost_if_wrong": 3,
+            "explanation_if_wrong": "\"This email is a legitimate communication regarding approved trading limits from a recognized company, Enron. There are no signs of phishing, as it includes specific details about internal policies and contact information for further inquiries.\""
+        },
+        {
+            "topic": "Account Verification Required",
+            "sender_persona": "Support Team",
+            "subject": "Important: Action Required for Your Account Security 🔒",
+            "greeting": "Hello Valued User,",
+            "body": "We hope this message finds you well. Our records indicate that there have been several attempts to access your account from unrecognized devices. To ensure the safety of your personal information and to maintain the integrity of your account, we require you to verify your details at your earliest convenience. \\n\\nPlease follow the secure link below to complete the verification process. This step is essential to prevent unauthorized access and to protect your account from potential threats. \\n\\nFailure to verify your account within the next 48 hours may result in a temporary suspension of your access. Your cooperation is greatly appreciated as we strive to keep your information safe. \\n\\nThank you for your prompt attention to this important matter. \\n\\nBest, \\nThe Support Team",
+            "call_to_action": "Verify Your Account Now 👉 http://example.com",
+            "phish_or_not": "\"Phish\"",
+            "lives_lost_if_wrong": 15,
+            "explanation_if_wrong": "You have fallen for a phishing attempt. This email was designed to create a false sense of urgency, tricking you into providing your personal information. Always verify the source before clicking on links or providing sensitive data."
+        }
+    ],
+    "phishmaster": [
+        {
+            "topic": "Account Verification Required",
+            "sender_persona": "Customer Support Team",
+            "subject": "Urgent: Action Required for Your Account Verification! 🔒",
+            "greeting": "Dear Valued Customer,",
+            "body": "We hope this message finds you well. As part of our commitment to maintaining the highest security standards, we are conducting a mandatory verification of all user accounts. Our records indicate that your account has not yet been verified, and we would like to remind you that failure to complete this process may result in restricted access to your account and services. \\n\\nTo ensure the security of your account, please follow the link below to verify your information: \\n\\n[Verify Your Account Now](http://example.com) \\n\\nThis verification is crucial to protect your personal data and ensure that you continue to receive uninterrupted service. If you have any questions or require assistance, do not hesitate to contact us by replying to this email or visiting our support page. \\n\\nThank you for your prompt attention to this matter. Your security is our top priority! \\n\\nBest regards, \\nThe Customer Support Team \\n\\n📞 Contact Us: support@example.com",
+            "call_to_action": "Verify Your Account Now",
+            "phish_or_not": "\"Phish\"",
+            "lives_lost_if_wrong": 15,
+            "explanation_if_wrong": "You have fallen victim to a phishing attempt. This email was designed to trick you into providing personal information that could compromise your account. Always ensure emails requesting sensitive information are from legitimate sources before clicking any links."
+        },
+        {
+            "topic": "\"Email Whitelisting and Anti-Spam Techniques\"",
+            "sender_persona": "\"Bart Schaefer\"",
+            "subject": "\"Discussion on Whitelist RBL and its Practical Use\"",
+            "greeting": "\"Hello Spamassassin-talk community,\"",
+            "body": "\"\"\"I wanted to share some thoughts on the recent developments surrounding whitelisting and how it relates to spam filtering. The concept of a whitelist RBL, as seen with Ironport's Bonded Sender, is an interesting approach where a bond is posted to gain entry onto the list. However, the risk is that if spam is sent from that IP address, the bond is forfeited.",
+            "call_to_action": "\"Let's discuss further how we can implement these strategies effectively.\",",
+            "phish_or_not": "\"Not Phish\",",
+            "lives_lost_if_wrong": 0,
+            "explanation_if_wrong": "\"This email is a legitimate conversation about email whitelisting and anti-spam measures, not a phishing attempt. The sender is sharing valuable insights on the topic, which is relevant to the community.\""
+        },
+        {
+            "topic": "Account Verification Required",
+            "sender_persona": "Support Team",
+            "subject": "Urgent: Action Required for Your Account Security 🚨",
+            "greeting": "Dear Valued User,",
+            "body": "We hope this message finds you well. We are reaching out to inform you that we have detected unusual activity on your account that requires immediate attention. To ensure the security of your personal information, we need you to verify your account details as soon as possible. \\n\\nIn our continuous effort to provide you with the best service, we monitor for any suspicious behavior on our platform. Our system has flagged your account due to multiple login attempts from different locations that do not match your usual activity. \\n\\nTo safeguard your account from potential unauthorized access, please follow the link below to verify your information. This is a necessary step to maintain your account's integrity and prevent any disruption of service. \\n\\nIf you do not verify your account within 48 hours, we may have to temporarily suspend your access for your protection. We appreciate your prompt attention to this matter and thank you for being a valued member of our community. \\n\\nFor your convenience, we have made the verification process straightforward and secure. Simply click the link below to get started: \\nhttp://example.com/verify-account \\n\\nThank you for your cooperation. If you have any questions, feel free to reach out to our support team.",
+            "call_to_action": "Verify Your Account Now 🔒",
+            "phish_or_not": "\"Phish\"",
+            "lives_lost_if_wrong": 24,
+            "explanation_if_wrong": "If you chose incorrectly, please review the email carefully. Legitimate organizations will never ask you to verify your account through unsolicited emails or messages. Always verify the sender's email address and avoid clicking on suspicious links."
+        },
+        {
+            "topic": "Student Conference Call for Papers",
+            "sender_persona": "UTA Student Conference in Linguistics Committee",
+            "subject": "Call for Papers: Sixth Annual UTA Student Conference in Linguistics",
+            "greeting": "Dear Students and Faculty,",
+            "body": "We are excited to announce the sixth annual UTA Student Conference in Linguistics (UTASCIL), which will be held on March 12-13, 1999. This conference aims to provide a platform for students to present their research in the field of linguistics and engage with fellow scholars. We invite all undergraduate and graduate students to submit abstracts for their papers. This is a great opportunity to showcase your work, receive feedback, and connect with peers and faculty members in the linguistics community.",
+            "call_to_action": "Submit your abstract by December 11th!",
+            "phish_or_not": "\"Not Phish\"",
+            "lives_lost_if_wrong": 3,
+            "explanation_if_wrong": "This email is a legitimate announcement for a scholarly conference at the University of Texas at Arlington, inviting students to submit research papers. There are no indicators of phishing or fraudulent activity present in the email content."
+        },
+        {
+            "topic": "Request for Natural Gas Technical Analysis",
+            "sender_persona": "Tim McKone, Commercial Transaction Group",
+            "subject": "Request for Natural Gas Technical Analysis",
+            "greeting": "Hello Mike,",
+            "body": "I work in Rodney Malcolm's commercial transaction group, focusing on developing energy management relationships with large volume industrial energy consumers. Due to the volatility and high price levels of the natural gas contract, these consumers of natural gas are extremely concerned about this exposure, and they are asking for our assistance in helping them manage this exposure. One of the tools that these customers are requesting is technical analysis of the natural gas contract so as to determine entry points for their hedges. To the extent you could assist us with this analysis, we can proactively meet these customer requests and increase our deal flow. Please advise as to the availability of your assistance. Thank you,",
+            "call_to_action": "Please advise as to the availability of your assistance.",
+            "phish_or_not": "\"Not Phish\"",
+            "lives_lost_if_wrong": 4,
+            "explanation_if_wrong": "This email is a legitimate request for assistance with technical analysis in the natural gas sector. It originates from a recognized employee within a commercial transaction group, and the content is focused on providing support to industrial energy consumers. There are no suspicious cues, such as urgent language or requests for sensitive information that are commonly found in phishing attempts. Misidentifying this email as a phishing attempt would overlook the genuine need for assistance in a professional context."
+        },
+        {
+            "topic": "Spam and Ham Test Sets for Spambayes Project",
+            "sender_persona": "Skip Montanaro",
+            "subject": "Collaboration on Spam and Ham Test Sets",
+            "greeting": "Hi Team,",
+            "body": "I wanted to reach out regarding the ongoing work with the spambayes project. I think it would be beneficial for us to wrap up our respective spam and ham test sets for inclusion in the project. The idea is to have multiple contributors working with the same test data to enhance the project's robustness. However, I must mention that my current Data/ subtree is quite extensive, with over 35,000 files amounting to 134 million bytes. This volume poses a challenge for sharing, especially considering the limitations of my ISP regarding email size.",
+            "call_to_action": "Please share your thoughts and any potential sources for ham samples.",
+            "phish_or_not": "\"Not Phish\"",
+            "lives_lost_if_wrong": 4,
+            "explanation_if_wrong": "This email is a genuine inquiry about collaboration on a data project and does not contain any phishing attempts. It discusses technical challenges and seeks input on sourcing legitimate data, demonstrating a professional exchange relevant to the spambayes project."
+        },
+        {
+            "topic": "Project Priscilla Board Resolution",
+            "sender_persona": "Dale Rasmussen",
+            "subject": "Draft Board Resolution - Project Priscilla (Las Vegas Cogeneration II, L.L.C.)",
+            "greeting": "Hello Team,",
+            "body": "I hope this message finds you well. I am writing to share the proposed board resolutions for the approval of the development of the Las Vegas Cogeneration II, L.L.C. project, which is a 224 MW generation facility located in Las Vegas, Nevada. Attached to this email, you will find the detailed resolutions for your review. Your feedback is vital to ensure we address any concerns before the submission to the board. Please take a moment to review the document and let me know if you have any comments or if there is anything else I can assist you with as we prepare for this important step. Thank you for your attention to this matter, and I look forward to hearing from you soon.",
+            "call_to_action": "Please review the attached document and provide your feedback at your earliest convenience.",
+            "phish_or_not": "\"Not Phish\"",
+            "lives_lost_if_wrong": 5,
+            "explanation_if_wrong": "The email appears to be a legitimate corporate correspondence regarding a board resolution for a project. It contains no signs of phishing, such as requests for sensitive information, suspicious links, or urgent demands for action. The sender is identified as a corporate employee reaching out to colleagues for feedback on an important project. Misidentifying this email as a phishing attempt could hinder important business processes and communication."
+        },
+        {
+            "topic": "Invoice Processing Transition to SAP",
+            "sender_persona": "Enron Accounts Payable Team",
+            "subject": "Important Dates for Invoice Processing Transition",
+            "greeting": "Dear Team,",
+            "body": "As you are aware, the SAP financial systems will be implemented for the Enron Gas Pipeline Group, Enron North America, and Enron Energy Services companies on July 1, 2000. To effectively transfer the invoice processing from the legacy MSA system to the SAP system, the following dates should be followed:",
+            "call_to_action": "Please ensure you adhere to these deadlines and reach out if you have any questions.",
+            "phish_or_not": "\"Not Phish\"",
+            "lives_lost_if_wrong": 5,
+            "explanation_if_wrong": "You have chosen incorrectly. This email pertains to an important internal transition process regarding invoice processing at Enron, with specified dates and contacts for assistance. It is crucial to identify legitimate internal communications to avoid disruptions in financial operations."
+        },
+        {
+            "topic": "Mid-Year Final PRC Meeting Distribution",
+            "sender_persona": "Mark Frevert",
+            "subject": "Distribution List for Mid-Year Final PRC Meeting",
+            "greeting": "Dear Team,",
+            "body": "I hope this message finds you well. As we approach the Mid-Year Final PRC Meeting, I wanted to ensure that everyone is informed and prepared for our discussions. Below is the distribution list for the meeting attendees: \\n\\n- Mark Frevert \\n- Greg Whalley \\n- John Lavorato \\n- Louise Kitchen \\n- Mike McConnell \\n- Jeff Shankman \\n- Philippe Bibi \\n- Greg Piper \\n- Jeff McMahon \\n- Ray Bowen \\n- Rebecca McDonald \\n- Jim Hughes \\n- David Oxley \\n- Robert W. Jones \\n- Wes Colwell \\n- Mark Haedicke \\n- Vince Kaminski \\n- Phillip Allen \\n- Tim Belden \\n- Chris Calger \\n- Joe Deffner \\n- Tim Detmering \\n- Dave Duran \\n- Joe Kishkell \\n- Rob Milnthorp \\n- Brian Redmond \\n- Gary Hickerson \\n- George McClellan \\n- Sally Beck \\n- Brian Stanley \\n- Keith Dodson \\n- CC: Niki Daw \\n- Liz Taylor \\n- Kim Hillis \\n- Tammy Schoppe \\n- Cathy Phillips \\n- Jennifer Burns \\n- Peggy McCurley \\n- Tina Spiller \\n- Sue Ford \\n- Marsha Schiller \\n- Loretta Brelsford \\n- Connie Blackwood \\n- Julie Clyatt \\n- Lisa Costello \\n- Shirley Tijerina \\n- Janette Elbertson \\n- Shirley Crenshaw \\n- Ina Rangel \\n- Deborah Davidson \\n- Mollie Gustafson \\n- Megan Angelos \\n- Susan Fallon \\n- Tina Rode \\n- G. G. Garcia \\n- Manuela Cappelletto \\n- Lillian Carroll \\n- Judy Zoch \\n- Angie Collins \\n- Patti Thompson \\n- Nicola Blancke \\n- Barbara Hooks \\n\\nPlease make sure to review the agenda and come prepared with any necessary materials. Your contributions are valued, and I look forward to our discussions.",
+            "call_to_action": "Kindly confirm your attendance and let me know if you have any topics you would like to add to the agenda.",
+            "phish_or_not": "\"Not Phish\"",
+            "lives_lost_if_wrong": 3,
+            "explanation_if_wrong": "This email contains legitimate information regarding a meeting and does not exhibit typical phishing characteristics such as requesting sensitive information, containing suspicious links, or using urgent language. It appears to be a standard internal communication regarding an upcoming meeting, which makes it safe."
+        },
+        {
+            "topic": "\"Urgent Security Update Required for Your Account\"",
+            "sender_persona": "\"Support Team\"",
+            "subject": "\"Important: Immediate Action Required for Your Account Security 🔒\"",
+            "greeting": "\"Dear Valued User,\"",
+            "body": "\"We hope this message finds you well. As part of our ongoing commitment to ensuring the safety and security of your account, we are implementing an important security update that requires your immediate attention. \\n\\nRecently, we detected unusual activity in your account, which has raised some security concerns. To protect your sensitive information, we urge you to verify your account details at your earliest convenience. Our dedicated team has enhanced our security measures, but your participation is crucial in maintaining a secure environment for all users. \\n\\nPlease click the link below to confirm your details and ensure that your account remains secure:\\n\\n🔗 [Verify Your Account Now](http://example.com)\\n\\nFailure to complete this verification process may result in temporary restrictions on your account to safeguard your information from unauthorized access. We understand that your time is valuable, but this step is essential for your security and peace of mind. \\n\\nIf you have any questions or need assistance, do not hesitate to reach out to our support team. We are here to help you 24/7. \\n\\nThank you for your prompt attention to this matter. Your security is our top priority!\",",
+            "call_to_action": "\"Click here to verify your account and secure your information! 🛡️\",",
+            "phish_or_not": "\"Phish\",",
+            "lives_lost_if_wrong": 0,
+            "explanation_if_wrong": "\"This was a phishing attempt designed to steal your personal information. Always check the URL carefully and look for signs of authenticity before clicking any links in emails.\""
+        }
+    ]
+}

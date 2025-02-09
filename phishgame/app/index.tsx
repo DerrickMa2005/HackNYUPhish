@@ -1,12 +1,11 @@
 import { TagsList } from '@/components/TagsList';
 import { EmailsList } from '@/components/EmailsList';
-import { Text, View, StyleSheet, Image, TextInput, TouchableOpacity } from 'react-native';
+import { Text, View, StyleSheet, Image, TextInput, TouchableOpacity, Modal} from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 import React, { useState, useRef, useEffect } from 'react'; // Import useRef and useEffect
 import { useFonts } from 'expo-font';
-import { BlurView } from 'expo-blur';
-import phishingEmails from '@/generated_phishing_emails.json';
+import phishingEmails from '@/generated_phishing_emails(1).json';
 import { Audio } from 'expo-av'; // Import Audio from expo-av
 
 function getDifficultyString(difficulty: number): string {
@@ -54,12 +53,43 @@ export default function HomeScreen() {
   const [isPreGenerating, setIsPreGenerating] = useState(false);
   const [sound, setSound] = useState<Audio.Sound | null>(null); // Store the sound object
   const [isPlaying, setIsPlaying] = useState(false); // Track if the sound is playing
+  const [rulesVisible, setRulesVisible] = useState(false);
+  const [statsVisible, setStatsVisible] = useState(false);
   const revealIndex = useRef(0); // Use useRef to persist the index across renders
   const [fontsLoaded] = useFonts({
     'custom-font': require('@/assets/fonts/Game-Of-Squids.otf'),
   });
   if (!fontsLoaded) {
     return <Text>Loading...</Text>;
+  }
+  interface PopProp {
+    isVisible: boolean;
+    children: React.ReactNode;
+    onClose: () => void;
+  }
+  
+  const Pop = ({ isVisible, children, onClose }: PopProp) => {
+    return (
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={isVisible}
+        onRequestClose={() => onClose()}
+      >
+        <View style={styles.outerEmail}>
+          <View style={styles.openEmail}>
+            <LinearGradient colors={['#9C3F49', '#14141F']} style={styles.container}>
+              <Text style={styles.emailMain}>{children}</Text>
+              <View style={styles.closeRegion}>
+                <TouchableOpacity onPress={onClose}>
+                <Text style={styles.closeButton}>Click here to close this window.</Text>
+                </TouchableOpacity>
+              </View>
+            </LinearGradient>
+          </View>
+        </View>
+      </Modal>
+    );
   }
   const stopSound = async () => {
     if (sound && isPlaying) {
@@ -169,13 +199,8 @@ export default function HomeScreen() {
             </View>
             <Text style={styles.score}>Lives: {score}</Text>
           </LinearGradient>
-          
           <View style={styles.body}>
             <View style={styles.sidebar}>
-              <Image
-                source={require('@/assets/images/Green_Menu_Icon.png')}
-                style={styles.searchIcon}
-              />
               <TouchableOpacity onPress={playSound}>
                 <Image
                   source={require('@/assets/images/noise.png')}
@@ -183,16 +208,51 @@ export default function HomeScreen() {
                   resizeMode="contain"
                 />
               </TouchableOpacity>
+              <TouchableOpacity onPress={!rulesVisible ? () => setRulesVisible(true) :
+                () => setRulesVisible(false)
+              }>
               <Image
                 source={require('@/assets/images/How-To-Play-Question-Mark.png')}
                 style={styles.searchIcon}
                 resizeMode="contain"
               />
+          <Pop isVisible={rulesVisible} onClose={() => setRulesVisible(false)}>
+          <View style={styles.block}>
+                <Text style={styles.padding}>Rules</Text>
+                <Text style={styles.padding}>1. Click on the emails to view the full content.</Text>
+                <Text style={styles.padding}>2. Identify whether or not the email is a phishing email or not.</Text>
+                <Text style={styles.padding}>3. If you incorrectly identify an email, we will take several lives.</Text>
+                <Text style={styles.padding}>4. Good Luck...</Text>
+                </View>
+              </Pop>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={!statsVisible ? () => setStatsVisible(true) :
+                () => setStatsVisible(false)
+              }>
               <Image
                 source={require('@/assets/images/about.png')}
                 style={styles.searchIcon}
                 resizeMode="contain"
               />
+              </TouchableOpacity>
+              <Pop isVisible={statsVisible} onClose={() => setStatsVisible(false)}>
+          <View style = {styles.statsBlock}>
+          <View style={styles.stats}>
+                <Text style={styles.padding}>Statistics</Text>
+                <Text style={styles.padding}>-83% of UK businesses suffered a phishing attack in 2022</Text>
+                <Text style={styles.padding}>-26% of organizations have a plan for cyber incidents</Text>
+                <Text style={styles.padding}>-$4.9 million is the average amount to recover from a phishing attack</Text>
+                <Text style={styles.padding}>-A quarter of phishing emails bypassed Office 365 Security in 2019</Text>
+                </View>
+              <View style={styles.graph}>
+                  <Image
+                    source={require('@/assets/images/phishgraph.png')}
+                    style={{ width: 400, height: 300 }}
+                    resizeMode="contain"
+                  />
+              </View>
+              </View>
+              </Pop>
             </View>
             <View style={styles.main}>
               <TagsList
@@ -232,6 +292,25 @@ export default function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
+  statsBlock: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  stats: {
+    flex: 0.6,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+  },
+  graph: {
+    flex: 0.5,
+    paddingLeft: 50,
+  },
+  padding: {
+    padding: 10,
+    fontSize: 20,
+  },
   container: {
     flex: 1,
   },
@@ -324,5 +403,56 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     color: '#14141F',
+  },
+  outerEmail: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  openEmail: {
+    width: '200%',
+    height: '80%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    elevation: 5,
+  },
+  emailMain: {
+    flex: 0.2,
+    flexDirection: 'column',
+    height: 500,
+    width: 1000,
+    color: 'white',
+    fontSize: 13,
+    padding: 10,
+    margin: 10,
+  },
+  closeRegion: {
+    flex: 0.9,
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+    paddingVertical: 10,
+  },
+  closeButton: {
+    width: 300,
+    height: 75,
+    backgroundColor: 'white',
+    borderColor: 'black',
+    borderRadius: 10,
+    borderWidth: 2,
+    justifyContent: 'center',
+    paddingTop: 20,
+    alignItems: 'center',
+    textAlign: 'center',
+    fontSize: 20,
+    color: 'black',
+    marginTop: 150,
+  },
+  block: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'flex-start',
   },
 });
