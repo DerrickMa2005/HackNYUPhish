@@ -13,7 +13,6 @@ function getDifficultyString(difficulty: number): string {
   if (difficulty === 1) return "phishdisciple";
   return "phishmaster";
 }
-
 export default function HomeScreen() {
   const [difficulty, setDifficulty] = useState(0);
   const [score, setScore] = useState(100);
@@ -21,7 +20,7 @@ export default function HomeScreen() {
   const [displayedEmails, setDisplayedEmails] = useState<any[]>([]);
   const [gameStarted, setGameStarted] = useState(false);
   const [isPreGenerating, setIsPreGenerating] = useState(false);
-
+  const revealIndex = useRef(0); // Use useRef to persist the index across renders
   const [fontsLoaded] = useFonts({
     'custom-font': require('@/assets/fonts/Game-Of-Squids.otf'),
   });
@@ -32,7 +31,8 @@ export default function HomeScreen() {
   function updateScore(input: number) {
     setScore(prevScore => prevScore - input);
   }
-
+  
+  
   async function preGenerateEmails() {
     setIsPreGenerating(true);
     const diffStr = getDifficultyString(difficulty);
@@ -47,8 +47,8 @@ export default function HomeScreen() {
         email.hasOwnProperty('call_to_action') &&
         email.hasOwnProperty('topic') &&
         email.hasOwnProperty('subject')
+        
       ));
-  
       setGeneratedEmails(emails);
     } catch (error) {
       console.error("Error generating emails:", error);
@@ -58,16 +58,16 @@ export default function HomeScreen() {
     }
   }
 
-  const revealIndex = useRef(0); // Use useRef to persist the index across renders
+  
 
   function startGameSequence() {
     setGameStarted(true);
     setDisplayedEmails([]);
-    revealIndex.current = 0; // Reset the index when starting a new game
+    revealIndex.current = -1; // Reset the index when starting a new game
     const emailsToSend = [...generatedEmails];
 
     const revealNext = () => {
-      if (revealIndex.current < emailsToSend.length) {
+      if (revealIndex.current < emailsToSend.length - 1) {
         setDisplayedEmails(prev => [...prev, emailsToSend[revealIndex.current]]);
         revealIndex.current++;
         const delay = Math.floor(Math.random() * (3000 - 2000 + 1)) + 2000; // Reduced delay range
@@ -234,6 +234,7 @@ const styles = StyleSheet.create({
     right: 0,
     justifyContent: 'center',
     alignItems: 'center',
+    
   },
   centerButton: {
     backgroundColor: 'rgba(255,255,255,0.8)',
