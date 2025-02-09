@@ -47,7 +47,7 @@ const Email = ({index, info, updateScore, updateList} : EmailProps) => {
         setIsModalVisible(true);
     } 
     const closeModal = (answer: boolean) => {
-        if (answer === (info.phish_or_not === "\"phish\"")) {
+        if (answer !== (info.phish_or_not === "\"phish\"")) {
             updateScore(parseInt(info.lives_lost_if_wrong));
         }
         updateList(index);
