@@ -49,7 +49,10 @@ export default function HomeScreen() {
         email.hasOwnProperty('body') &&
         email.hasOwnProperty('call_to_action') &&
         email.hasOwnProperty('topic') &&
-        email.hasOwnProperty('subject')
+        email.hasOwnProperty('subject') &&
+        email.hasOwnProperty('phish_or_not') &&
+        email.hasOwnProperty('lives_lost_if_wrong') &&
+        email.hasOwnProperty('explanation_if_wrong')
         
       ));
       setGeneratedEmails(emails);

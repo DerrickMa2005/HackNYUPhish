@@ -1,7 +1,36 @@
 import { Text, View, StyleSheet, Modal, TouchableOpacity, Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useState } from 'react';
-import { useFonts } from 'expo-font';
+
+interface CorrectionPopProp {
+  isVisible: boolean;
+  children: React.ReactNode;
+  onClose: () => void;
+}
+
+const CorrectionPop = ({ isVisible, children, onClose }: CorrectionPopProp) => {
+  return (
+    <Modal
+      animationType="slide"
+      transparent={true}
+      visible={isVisible}
+      onRequestClose={() => onClose()}
+    >
+      <View style={styles.outerEmail}>
+        <View style={styles.openEmail}>
+          <LinearGradient colors={['#9C3F49', '#14141F']} style={styles.container}>
+            <Text style={styles.emailMain}>{children}</Text>
+            <View style={styles.closeRegion}>
+              <TouchableOpacity onPress={onClose}>
+              <Text style={styles.closeButton}>Click here to close this window.</Text>
+              </TouchableOpacity>
+            </View>
+          </LinearGradient>
+        </View>
+      </View>
+    </Modal>
+  );
+}
 
 interface EmailPopProp {
   isVisible: boolean;
@@ -33,15 +62,13 @@ const EmailPop = ({ isVisible, children, onClose }: EmailPopProp) => {
               <TouchableOpacity onPress={() => onClose(true)}>
                 <Image
                   source={require('@/assets/images/yes-button.png')}
-                  style={[styles.yesButtonImage, styles.button]}
-                  resizeMode="contain"
+                  style={styles.button}
                 />
               </TouchableOpacity>
               <TouchableOpacity onPress={() => onClose(false)}>
                 <Image
                   source={require('@/assets/images/no-button.png')}
-                  style={[styles.noButtonImage, styles.button]}
-                  resizeMode="contain"
+                  style={styles.button}
                 />
               </TouchableOpacity>
             </View>
@@ -62,16 +89,20 @@ interface EmailProps {
 
 const Email = ({ index, info, updateScore, removeEmail, generated }: EmailProps) => {
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+  const [isExplainVisible, setIsExplainVisible] = useState<boolean>(false);
 
   const onModalOpen = () => setIsModalVisible(true);
 
   const closeModal = (answer: boolean) => {
-    if (info && answer !== (info.phish_or_not === "\"Phish\"")) {
-      updateScore(parseInt(info.lives_lost_if_wrong) || 0);
-    }
     removeEmail(index); // Call removeEmail to remove the email from the list
     setIsModalVisible(false);
+    if (info && answer !== (info.phish_or_not === "\"Phish\"")) {
+      updateScore(parseInt(info.lives_lost_if_wrong) || 0);
+      setIsExplainVisible(true);
+    }
   };
+
+  const closeExplain = () => setTimeout(() => setIsExplainVisible(false), 1);
 
   // Safely access properties with optional chaining and default values
   const body = info?.body || "";
@@ -79,6 +110,7 @@ const Email = ({ index, info, updateScore, removeEmail, generated }: EmailProps)
   const content = body + callToAction;
   const topic = info?.topic || "";
   const subject = info?.subject || "";
+  const explanation = info?.explanation_if_wrong || "";
   if (generated) {
     return (
       <TouchableOpacity onPress={onModalOpen} style={styles.emailBox}>
@@ -90,9 +122,12 @@ const Email = ({ index, info, updateScore, removeEmail, generated }: EmailProps)
           <Text style={styles.emailBody}>
             {" - " + content.slice(0, 145).replace(/(\r\n|\n|\r)/gm, "")}
           </Text>
-          <EmailPop isVisible={isModalVisible} onClose={closeModal}>
-            <Text style={styles.emailMain}>{content.replace(/\\n/g, '\n')}</Text>
+          <EmailPop isVisible={isModalVisible && !isExplainVisible} onClose={closeModal}>
+            <Text style={styles.emailMain}>{content}</Text>
           </EmailPop>
+          <CorrectionPop isVisible={isExplainVisible} onClose={closeExplain}>
+            <Text style={styles.emailMain}>{explanation}</Text>
+            </CorrectionPop>
         </View>
       </TouchableOpacity>
     );
@@ -154,8 +189,8 @@ export function EmailsList({ emails, score, updateScore, removeEmail, endGame, g
 const styles = StyleSheet.create({
   button: {
     justifyContent: 'center',
-    height: 125,
-    width: 125,
+    height: 100,
+    width: 100,
   },
   outerEmail: {
     flex: 1,
@@ -227,39 +262,24 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   closeRegion: {
+    flex: 0.9,
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'space-evenly',
     alignItems: 'center',
     paddingVertical: 10,
   },
-  yesButton: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    backgroundColor: '#27AE60',
-    borderRadius: 8,
-    paddingVertical: 6,
-    paddingHorizontal: 12,
-    color: '#fff',
-    width: '40%',
+  closeButton: {
+    width: 300,
+    height: 75,
+    backgroundColor: 'white',
+    borderColor: 'black',
+    borderRadius: 10,
+    borderWidth: 2,
+    justifyContent: 'center',
+    paddingTop: 20,
+    alignItems: 'center',
     textAlign: 'center',
-  },
-  noButton: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    backgroundColor: '#E74C3C',
-    borderRadius: 8,
-    paddingVertical: 6,
-    paddingHorizontal: 12,
-    color: '#fff',
-    width: '40%',
-    textAlign: 'center',
-  },
-  yesButtonImage: {
-    width: 4, // Adjust as needed
-    height: 4, // Adjust as needed
-  },
-  noButtonImage: {
-    width: 3, // Adjust as needed
-    height: 3, // Adjust as needed
-  },
+    fontSize: 20,
+    color: 'black',
+  }
 });
