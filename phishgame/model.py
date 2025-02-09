@@ -133,7 +133,7 @@ def generate_phish_prompt(difficulty: str) -> str:
 You are generating a single phishing (Phish) email for a "Phish Game" with difficulty: {difficulty}.
 Style: {style}.
 
-Aim for ~500 words. 
+Aim for ~800 words. 
 Return a single multiline string with fields:
 topic: ...
 sender_persona: ...
@@ -180,7 +180,7 @@ phish_or_not: "Not Phish"
 lives_lost_if_wrong: {lives_lost}
 explanation_if_wrong: ...  <-- The text to show if the user chooses wrongly
 
-No suspicious cues. ~500 words. No extra commentary.
+No suspicious cues. ~800 words. No extra commentary.
 
 Original snippet:
 \"\"\"{raw_email_text}\"\"\"
