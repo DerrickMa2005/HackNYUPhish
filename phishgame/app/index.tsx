@@ -5,13 +5,26 @@ import { LinearGradient } from 'expo-linear-gradient';
 import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
 import React from 'react';
 import { useState } from 'react';
+import { useFonts } from 'expo-font';
 
 export default function HomeScreen() {
   const [difficulty, setDifficulty] = useState(0);
   const [score, setScore] = useState(100); 
+  // Load the custom font
+  const [fontsLoaded] = useFonts({
+    'custom-font': require('@/assets/fonts/Game-Of-Squids.otf'), // Replace with your font file path
+  });
+
+  // Show loading message while the font is loading
+  if (!fontsLoaded) {
+    return <Text>Loading...</Text>;
+  }
+
+
   function updateScore(input : number) {
     setScore(score - input);
   }
+
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.container}>
@@ -21,10 +34,10 @@ export default function HomeScreen() {
         >
            {/* Header with a gradient */}
           <LinearGradient
-            colors={['#249F9C', '#E514AC']} // Gradient for the header
+            colors={['#9C3F49', '#800A63']} // Gradient for the header
             style={styles.header}
           >
-            <Text style={styles.title}>Phishgame</Text>
+             <Text style={[styles.title, { fontFamily: 'custom-font' }]}>Phishgame</Text>
             <View style={styles.searchBar}> 
               <Image
                 source={require('@/assets/images/black-search-icon.png')}
@@ -41,9 +54,19 @@ export default function HomeScreen() {
         <View style={styles.body}>
           <View style={styles.sidebar}>
           <Image
-              source={require('@/assets/images/search-icon.png')}
-              style={styles.searchIcon}
-            />
+                source={require('@/assets/images/Green_Menu_Icon.png')}
+                style={[styles.searchIcon, {marginTop: 100 }]}
+              />
+              <Image
+                source={require('@/assets/images/How-To-Play-Question-Mark.png')}
+                style={[styles.searchIcon, {marginTop: 200 }]}
+                resizeMode="contain"
+                />
+              <Image
+                source={require('@/assets/images/about.png')}
+                style={[styles.searchIcon, {marginTop: 200 }]}
+                resizeMode="contain"
+              />
           </View>
           <View style={styles.main}>
             <TagsList difficulty = {difficulty} selectIndex = {setDifficulty}/>

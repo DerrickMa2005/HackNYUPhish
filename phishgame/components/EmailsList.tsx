@@ -1,4 +1,6 @@
-import { Text, View, StyleSheet, Modal,  TouchableOpacity} from 'react-native';
+
+import { Text, View, StyleSheet, Modal, TouchableOpacity, Image } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
 import { useState } from 'react';
 
@@ -8,7 +10,7 @@ interface EmailPopProp {
     onClose: (answer: boolean) => void;
 }
 
-const EmailPop = ({isVisible, children, onClose} : EmailPopProp) => {
+const EmailPop = ({ isVisible, children, onClose }: EmailPopProp) => {
     return (
         <Modal
             animationType="slide"
@@ -16,23 +18,43 @@ const EmailPop = ({isVisible, children, onClose} : EmailPopProp) => {
             visible={isVisible}
             onRequestClose={() => onClose(false)}
         >
-        <View style={styles.outerEmail}>
-            <View style={styles.openEmail}>
-                <View style = {styles.container}>
+            <View style={styles.outerEmail}>
+                <View style={styles.openEmail}>
+                    <LinearGradient
+                        colors={['#9C3F49', '#14141F']}
+                        style={styles.container}
+                    >
                         <Text style={styles.emailMain}>{children}</Text>
                         <View style={styles.closeRegion}>
+
+                            <TouchableOpacity onPress={onClose}>
+                               
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={onClose}>
+                            
+                            </TouchableOpacity>
+
                             <TouchableOpacity onPress={() => onClose(true)}>
-                                <Text style={styles.yesButton}>Is Phishing</Text>
+                                <Image
+                                    source={require('@/assets/images/yes-button.png')}
+                                    style={styles.button}
+                                    resizeMode="contain"
+                                />
                                 </TouchableOpacity>
                             <TouchableOpacity onPress={() => onClose(false)}>
-                                <Text style={styles.noButton}>Isn't Phishing</Text></TouchableOpacity>
+                                <Image
+                                    source={require('@/assets/images/no-button.png')}
+                                    style={styles.button}
+                                    resizeMode="contain"
+                                />
+                          </TouchableOpacity>
                         </View>
+                    </LinearGradient>
                 </View>
             </View>
-        </View>
         </Modal>
     );
-}
+};
 
 interface EmailProps {
     index: number;
@@ -93,6 +115,12 @@ export function EmailsList({emails, updateScore} : EmailsListProps) {
     );
 }
 const styles = StyleSheet.create({
+    button: {
+        justifyContent: 'center',
+        marginTop: 250,
+        height: 400,
+        width: 400,
+    },
     outerEmail: {
         height: '100%',
         flexDirection: 'column',
@@ -107,6 +135,7 @@ const styles = StyleSheet.create({
         flex: 0.2,
         flexDirection: 'column',
         height: 500,
+        color: 'white',
     },
     emailSender: {
         flex: 0.13,
