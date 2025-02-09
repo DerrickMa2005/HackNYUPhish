@@ -3,10 +3,11 @@ import { EmailsList } from '@/components/EmailsList';
 import { Text, View, StyleSheet, Image, TextInput, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
-import React, { useState, useRef } from 'react'; // Import useRef
+import React, { useState, useRef, useEffect } from 'react'; // Import useRef and useEffect
 import { useFonts } from 'expo-font';
 import { BlurView } from 'expo-blur';
 import phishingEmails from '@/generated_phishing_emails.json';
+import { Audio } from 'expo-av'; // Import Audio from expo-av
 
 function getDifficultyString(difficulty: number): string {
   if (difficulty === 0) return "phishnoob";
@@ -35,6 +36,7 @@ export default function HomeScreen() {
   
   
   async function preGenerateEmails() {
+    stopSound(); // Stop the music when pre-generating emails
     setIsPreGenerating(true);
     const diffStr = getDifficultyString(difficulty);
     try {
@@ -62,6 +64,7 @@ export default function HomeScreen() {
   
 
   function startGameSequence() {
+    stopSound(); // Stop the music when starting the game
     setGameStarted(true);
     setDisplayedEmails([]);
     revealIndex.current = -1; // Reset the index when starting a new game
@@ -100,6 +103,62 @@ export default function HomeScreen() {
     }
   }
 
+ const [sound, setSound] = useState<Audio.Sound | null>(null); // Store the sound object
+  const [isPlaying, setIsPlaying] = useState(false); // Track if the sound is playing
+
+  useEffect(() => {
+    async function loadSound() {
+      try {
+        const { sound: newSound } = await Audio.Sound.createAsync(
+          require('@/assets/sounds/squid_game_music.mp3'), // Replace with your sound file
+          {
+            shouldPlay: false, // Do not play on load
+            isLooping: true,   // Loop forever
+            volume: 1.0,        // Set volume to maximum
+          },
+          (status) => {
+            if (status.error) {
+              console.error('Error during playback:', status.error);
+            }
+          }
+        );
+        setSound(newSound); // Store the sound object
+      } catch (error) {
+        console.error('Error loading sound:', error);
+      }
+    }
+
+    loadSound();
+
+    return () => {
+      if (sound) {
+        sound.unloadAsync(); // Unload the sound when the component unmounts
+      }
+    };
+  }, []);
+
+  const stopSound = async () => {
+    if (sound && isPlaying) {
+      try {
+        await sound.pauseAsync();
+        setIsPlaying(false);
+      } catch (error) {
+        console.error('Error stopping sound:', error);
+      }
+    }
+  };
+
+  const playSound = async () => {
+    if (sound && !isPlaying) {
+      try {
+        await sound.playAsync();
+        setIsPlaying(true);
+      } catch (error) {
+        console.error('Error playing sound:', error);
+      }
+    }
+  };
+
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.container}>
@@ -123,6 +182,13 @@ export default function HomeScreen() {
                 source={require('@/assets/images/Green_Menu_Icon.png')}
                 style={styles.searchIcon}
               />
+              <TouchableOpacity onPress={playSound}>
+                <Image
+                  source={require('@/assets/images/noise.png')}
+                  style={styles.searchIcon}
+                  resizeMode="contain"
+                />
+              </TouchableOpacity>
               <Image
                 source={require('@/assets/images/How-To-Play-Question-Mark.png')}
                 style={styles.searchIcon}

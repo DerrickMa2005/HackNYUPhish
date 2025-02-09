@@ -1,6 +1,7 @@
 import { Text, View, StyleSheet, Modal, TouchableOpacity, Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useState } from 'react';
+import { useFonts } from 'expo-font';
 
 interface EmailPopProp {
   isVisible: boolean;
@@ -9,6 +10,14 @@ interface EmailPopProp {
 }
 
 const EmailPop = ({ isVisible, children, onClose }: EmailPopProp) => {
+  const [fontsLoaded] = useFonts({
+    'custom-font': require('@/assets/fonts/Game-Of-Squids.otf'),
+  });
+
+  if (!fontsLoaded) {
+    return <Text>Loading...</Text>;
+  }
+
   return (
     <Modal
       animationType="slide"
@@ -18,20 +27,20 @@ const EmailPop = ({ isVisible, children, onClose }: EmailPopProp) => {
     >
       <View style={styles.outerEmail}>
         <View style={styles.openEmail}>
-          <LinearGradient colors={['#9C3F49', '#14141F']} style={styles.container}>
-            <Text style={styles.emailMain}>{children}</Text>
+          <LinearGradient colors={['#34495E', '#2C3E50']} style={styles.container}>
+            <Text style={[styles.emailMain, { fontFamily: 'Georgia' }]}>{children}</Text>
             <View style={styles.closeRegion}>
               <TouchableOpacity onPress={() => onClose(true)}>
                 <Image
                   source={require('@/assets/images/yes-button.png')}
-                  style={styles.button}
+                  style={[styles.yesButtonImage, styles.button]}
                   resizeMode="contain"
                 />
               </TouchableOpacity>
               <TouchableOpacity onPress={() => onClose(false)}>
                 <Image
                   source={require('@/assets/images/no-button.png')}
-                  style={styles.button}
+                  style={[styles.noButtonImage, styles.button]}
                   resizeMode="contain"
                 />
               </TouchableOpacity>
@@ -51,7 +60,7 @@ interface EmailProps {
   generated: boolean;
 }
 
-const Email = ({ index, info, updateScore, removeEmail, generated}: EmailProps) => {
+const Email = ({ index, info, updateScore, removeEmail, generated }: EmailProps) => {
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
   const onModalOpen = () => setIsModalVisible(true);
@@ -82,7 +91,7 @@ const Email = ({ index, info, updateScore, removeEmail, generated}: EmailProps) 
             {" - " + content.slice(0, 145).replace(/(\r\n|\n|\r)/gm, "")}
           </Text>
           <EmailPop isVisible={isModalVisible} onClose={closeModal}>
-            <Text style={styles.emailMain}>{content}</Text>
+            <Text style={styles.emailMain}>{content.replace(/\\n/g, '\n')}</Text>
           </EmailPop>
         </View>
       </TouchableOpacity>
@@ -99,7 +108,7 @@ const Email = ({ index, info, updateScore, removeEmail, generated}: EmailProps) 
             {" - " + content.slice(0, 145).replace(/(\r\n|\n|\r)/gm, "")}
           </Text>
           <EmailPop isVisible={isModalVisible} onClose={closeModal}>
-            <Text style={styles.emailMain}>{content}</Text>
+            <Text style={styles.emailMain}>{content.replace(/\\n/g, '\n')}</Text>
           </EmailPop>
         </View>
       </View>
@@ -109,21 +118,21 @@ const Email = ({ index, info, updateScore, removeEmail, generated}: EmailProps) 
 
 interface EmailsListProps {
   emails: any[];
-  score : number;
+  score: number;
   updateScore: (input: number) => void;
   removeEmail: (index: number) => void; // Add removeEmail prop
-  endGame: (win : boolean) => void;
+  endGame: (win: boolean) => void;
   generated: boolean;
 }
 
 export function EmailsList({ emails, score, updateScore, removeEmail, endGame, generated }: EmailsListProps) {
   if (emails.length === 0 || score <= 0) {
     endGame(false);
-    updateScore(-(100-score));
+    updateScore(-(100 - score));
     return (
       <View style={styles.emails}>
       </View>
-    )
+    );
   } else {
     return (
       <View style={styles.emails}>
@@ -134,7 +143,7 @@ export function EmailsList({ emails, score, updateScore, removeEmail, endGame, g
             info={email}
             updateScore={updateScore}
             removeEmail={removeEmail} // Pass removeEmail to Email component
-            generated = {generated}
+            generated={generated}
           />
         ))}
       </View>
@@ -145,98 +154,112 @@ export function EmailsList({ emails, score, updateScore, removeEmail, endGame, g
 const styles = StyleSheet.create({
   button: {
     justifyContent: 'center',
-    marginTop: 250,
-    height: 400,
-    width: 400,
+    height: 125,
+    width: 125,
   },
   outerEmail: {
-    height: '100%',
-    flexDirection: 'column',
-    justifyContent: 'center',
-  },
-  openEmail: {
-    height: 400,
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  openEmail: {
+    height: '60%',
+    width: '80%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  emailContent: {
+    flex: 1,
+    padding: 20,
   },
   emailMain: {
-    flex: 0.2,
-    flexDirection: 'column',
-    height: 500,
-    color: 'white',
+    fontSize: 18,
+    color: '#ECF0F1',
+    lineHeight: 24,
+    textAlign: 'center',
+    padding: 10,
   },
   emailSender: {
-    flex: 0.26,
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: 'bold',
     marginRight: 10,
     marginLeft: 10,
-    color: 'white',
+    color: '#ECF0F1',
   },
   emailLine: {
-    flex: 0.74,
     flexDirection: 'row',
     alignItems: 'center',
   },
   emailSubject: {
-    fontSize: 12,
-    color: 'white',
+    fontSize: 14,
+    color: '#ECF0F1',
   },
   emailBody: {
-    fontSize: 10,
-    color: 'white',
+    fontSize: 16,
+    color: '#FF4500', // A bright orange-red color for fire
   },
   emails: {
     flex: 1,
     flexDirection: 'column',
   },
   emailBox: {
-    flex: 0.1,
+    padding: 10,
     borderBottomWidth: 1,
-    borderColor: 'black',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    flexDirection: 'row',
+    borderColor: '#555',
+    backgroundColor: 'rgba(0,0,0,0.2)',
   },
   container: {
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: 'grey',
-    width: '80%',
-    borderColor: 'black',
+    width: '100%',
+    height: '100%',
     borderRadius: 10,
-    borderWidth: 5,
+    borderWidth: 0,
+    overflow: 'hidden',
   },
   closeRegion: {
-    flex: 0.1,
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'space-around',
     alignItems: 'center',
-    height: 50,
-    margin: 20,
+    paddingVertical: 10,
   },
   yesButton: {
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: 'bold',
-    backgroundColor: 'green',
-    borderWidth: 2,
-    borderRadius: 10,
-    borderColor: 'black',
-    width: 150,
-    height: 50,
+    backgroundColor: '#27AE60',
+    borderRadius: 8,
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    color: '#fff',
+    width: '40%',
     textAlign: 'center',
-    margin: 10,
   },
   noButton: {
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: 'bold',
-    backgroundColor: 'red',
-    borderWidth: 2,
-    borderRadius: 10,
-    width: 150,
-    height: 50,
+    backgroundColor: '#E74C3C',
+    borderRadius: 8,
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    color: '#fff',
+    width: '40%',
     textAlign: 'center',
-    margin: 10,
-    borderColor: 'black',
+  },
+  yesButtonImage: {
+    width: 4, // Adjust as needed
+    height: 4, // Adjust as needed
+  },
+  noButtonImage: {
+    width: 3, // Adjust as needed
+    height: 3, // Adjust as needed
   },
 });
