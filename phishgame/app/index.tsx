@@ -1,5 +1,4 @@
 import { TagsList } from '@/components/TagsList';
-import { EmailsList } from '@/components/EmailsList';
 import { Text, View, StyleSheet, Image, TextInput, TouchableOpacity} from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
@@ -33,31 +32,32 @@ export default function HomeScreen() {
                 placeholder="Search"
               />
             </View>
-<LinearGradient>
-  <View style={styles.body}>
-    <View style={styles.sidebar}> 
-      <Image
-        source={require('@/assets/images/Green_Menu_Icon.png')}
-        style={[styles.searchIcon, {marginTop: 100 }]}
-      />
-      <Image
-        source={require('@/assets/images/How-To-Play-Question-Mark.png')}
-        style={[styles.searchIcon, {marginTop: 200 }]}
-        resizeMode="contain"
-      />
-      <Image
-        source={require('@/assets/images/about.png')}
-        style={[styles.searchIcon, {marginTop: 200 }]}
-        resizeMode="contain"
-      />
-    </View>
-    <View style={styles.main}>
-      <TagsList difficulty={difficulty} selectIndex={setDifficulty} />
-      <EmailsList emails={require("../test/phishnoob2.json")} />
-    </View>
-  </View>
-</LinearGradient>
+          </LinearGradient>
 
+          <View style={styles.body}>
+            <View style={styles.sidebar}> {/* No gradient here, it will inherit the gradient from the parent */}
+              <Image
+                source={require('@/assets/images/Green_Menu_Icon.png')}
+                style={[styles.searchIcon, {marginTop: 100 }]}
+              />
+              <Image
+                source={require('@/assets/images/How-To-Play-Question-Mark.png')}
+                style={[styles.searchIcon, {marginTop: 200 }]}
+                resizeMode="contain"
+                />
+              <Image
+                source={require('@/assets/images/about.png')}
+                style={[styles.searchIcon, {marginTop: 200 }]}
+                resizeMode="contain"
+              
+              />
+            </View>
+            <View style={styles.main}>
+              <TagsList difficulty={difficulty} selectIndex={setDifficulty} />
+              <View style={styles.emails}>
+                {/* Add your email-related content here */}
+              </View>
+            </View>
           </View>
         </LinearGradient>
       </SafeAreaView>
@@ -128,4 +128,22 @@ const styles = StyleSheet.create({
     flex: 0.95,
     flexDirection: 'column',
   },
+  emails: {
+    flex: 1,
+    flexDirection: 'column',
+  },
+  emailBox: {
+    flex: 0.1,
+    borderBottomWidth: 1,
+    borderColor: 'black',
+    justifyContent: 'flex-start',
+  },
+  selectedEmailBox: {
+    flex: 0.1,
+    borderBottomWidth: 1,
+    borderColor: 'black',
+    backgroundColor: 'light-grey',
+    textDecorationLine: 'underline',
+    justifyContent: 'flex-start',
+  }
 });
