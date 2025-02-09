@@ -33,8 +33,7 @@ export default function HomeScreen() {
                 placeholder="Search"
               />
             </View>
-            
-        </View>
+          </LinearGradient>
         <View style={styles.body}>
           <View style={styles.sidebar}>
           <Image
@@ -44,8 +43,9 @@ export default function HomeScreen() {
           </View>
           <View style={styles.main}>
             <TagsList difficulty = {difficulty} selectIndex = {setDifficulty}/>
-            <EmailsList emails = {require("../test/phishnoob2.json")}/>
+            <EmailsList emails = {require("../test/phishnoob2.json")} updateScore = {setScore}/>
           </View>
+        </View>
         </LinearGradient>
       </SafeAreaView>
     </SafeAreaProvider>
