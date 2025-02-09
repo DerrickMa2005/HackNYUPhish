@@ -28,8 +28,9 @@ interface TagListProps {
   difficulty: number;
   selectIndex: (input : number) => void;
 }
-const TagList = ({difficulty, selectIndex} : TagListProps) => {
-  return (
+
+export function TagsList({difficulty, selectIndex} : TagListProps) {
+    return (
     <View style={styles.tags}>
       {[...Array(3)].map((_, index) => (
         <Tag
@@ -40,12 +41,6 @@ const TagList = ({difficulty, selectIndex} : TagListProps) => {
         />
       ))}
     </View>
-  );
-}
-
-export function TagsList({difficulty, selectIndex} : TagListProps) {
-    return (
-        <TagList difficulty= {difficulty} selectIndex={selectIndex}/>
     );
 }
 

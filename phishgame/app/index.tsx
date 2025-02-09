@@ -1,6 +1,5 @@
 import { TagsList } from '@/components/TagsList';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+import { EmailsList } from '@/components/EmailsList';
 import { Text, View, StyleSheet, Image, TextInput, TouchableOpacity} from 'react-native';
 import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
 import React from 'react';
@@ -35,9 +34,7 @@ export default function HomeScreen() {
           </View>
           <View style={styles.main}>
             <TagsList difficulty = {difficulty} selectIndex = {setDifficulty}/>
-            <View style={styles.emails}>
-
-            </View>
+            <EmailsList emails = {require("../test/phishnoob2.json")}/>
           </View>
         </View>
         </SafeAreaView>
@@ -104,22 +101,4 @@ const styles = StyleSheet.create({
     flex: 0.95,
     flexDirection: 'column',
   },
-  emails: {
-    flex: 1,
-    flexDirection: 'column',
-  },
-  emailBox: {
-    flex: 0.1,
-    borderBottomWidth: 1,
-    borderColor: 'black',
-    justifyContent: 'flex-start',
-  },
-  selectedEmailBox: {
-    flex: 0.1,
-    borderBottomWidth: 1,
-    borderColor: 'black',
-    backgroundColor: 'light-grey',
-    textDecorationLine: 'underline',
-    justifyContent: 'flex-start',
-  }
 });
