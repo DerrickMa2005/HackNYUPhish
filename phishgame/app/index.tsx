@@ -7,7 +7,7 @@ import { useState } from 'react';
 
 export default function HomeScreen() {
   const [difficulty, setDifficulty] = useState(0);
-  const [emailCount, setEmailCount] = useState(10); 
+  const [score, setScore] = useState(100); 
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.container}>
@@ -34,7 +34,7 @@ export default function HomeScreen() {
           </View>
           <View style={styles.main}>
             <TagsList difficulty = {difficulty} selectIndex = {setDifficulty}/>
-            <EmailsList emails = {require("../test/phishnoob2.json")}/>
+            <EmailsList emails = {require("../test/phishnoob2.json")} updateScore = {setScore}/>
           </View>
         </View>
         </SafeAreaView>
