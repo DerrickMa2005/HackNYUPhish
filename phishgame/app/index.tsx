@@ -15,6 +15,36 @@ function getDifficultyString(difficulty: number): string {
   return "phishmaster";
 }
 export default function HomeScreen() {
+  useEffect(() => {
+    async function loadSound() {
+      try {
+        const { sound: newSound } = await Audio.Sound.createAsync(
+          require('@/assets/sounds/squid_game_music.mp3'), // Replace with your sound file
+          {
+            shouldPlay: false, // Do not play on load
+            isLooping: true,   // Loop forever
+            volume: 1.0,        // Set volume to maximum
+          },
+          (status) => {
+            if (status.error) {
+              console.error('Error during playback:', status.error);
+            }
+          }
+        );
+        setSound(newSound); // Store the sound object
+      } catch (error) {
+        console.error('Error loading sound:', error);
+      }
+    }
+
+    loadSound();
+
+    return () => {
+      if (sound) {
+        sound.unloadAsync(); // Unload the sound when the component unmounts
+      }
+    };
+  }, []);
   const [difficulty, setDifficulty] = useState(0);
   const [score, setScore] = useState(100);
   const [generatedEmails, setGeneratedEmails] = useState<any[]>([]);
@@ -22,6 +52,8 @@ export default function HomeScreen() {
   const [gameStarted, setGameStarted] = useState(false);
   const [gameGenerated, setGameGenerated] = useState(false);
   const [isPreGenerating, setIsPreGenerating] = useState(false);
+  const [sound, setSound] = useState<Audio.Sound | null>(null); // Store the sound object
+  const [isPlaying, setIsPlaying] = useState(false); // Track if the sound is playing
   const revealIndex = useRef(0); // Use useRef to persist the index across renders
   const [fontsLoaded] = useFonts({
     'custom-font': require('@/assets/fonts/Game-Of-Squids.otf'),
@@ -29,11 +61,26 @@ export default function HomeScreen() {
   if (!fontsLoaded) {
     return <Text>Loading...</Text>;
   }
-
-  function updateScore(input: number) {
-    setScore(prevScore => prevScore - input);
-  }
-  
+  const stopSound = async () => {
+    if (sound && isPlaying) {
+      try {
+        await sound.pauseAsync();
+        setIsPlaying(false);
+      } catch (error) {
+        console.error('Error stopping sound:', error);
+      }
+    }
+  };
+  const playSound = async () => {
+    if (sound && !isPlaying) {
+      try {
+        await sound.playAsync();
+        setIsPlaying(true);
+      } catch (error) {
+        console.error('Error playing sound:', error);
+      }
+    }
+  };
   
   async function preGenerateEmails() {
     stopSound(); // Stop the music when pre-generating emails
@@ -63,8 +110,9 @@ export default function HomeScreen() {
       alert('Emails pregenerated!');
     }
   }
-
-  
+  function updateScore(input: number) {
+    setScore(prevScore => prevScore - input);
+  }
 
   function startGameSequence() {
     stopSound(); // Stop the music when starting the game
@@ -105,63 +153,6 @@ export default function HomeScreen() {
       startGameSequence();
     }
   }
-
- const [sound, setSound] = useState<Audio.Sound | null>(null); // Store the sound object
-  const [isPlaying, setIsPlaying] = useState(false); // Track if the sound is playing
-
-  useEffect(() => {
-    async function loadSound() {
-      try {
-        const { sound: newSound } = await Audio.Sound.createAsync(
-          require('@/assets/sounds/squid_game_music.mp3'), // Replace with your sound file
-          {
-            shouldPlay: false, // Do not play on load
-            isLooping: true,   // Loop forever
-            volume: 1.0,        // Set volume to maximum
-          },
-          (status) => {
-            if (status.error) {
-              console.error('Error during playback:', status.error);
-            }
-          }
-        );
-        setSound(newSound); // Store the sound object
-      } catch (error) {
-        console.error('Error loading sound:', error);
-      }
-    }
-
-    loadSound();
-
-    return () => {
-      if (sound) {
-        sound.unloadAsync(); // Unload the sound when the component unmounts
-      }
-    };
-  }, []);
-
-  const stopSound = async () => {
-    if (sound && isPlaying) {
-      try {
-        await sound.pauseAsync();
-        setIsPlaying(false);
-      } catch (error) {
-        console.error('Error stopping sound:', error);
-      }
-    }
-  };
-
-  const playSound = async () => {
-    if (sound && !isPlaying) {
-      try {
-        await sound.playAsync();
-        setIsPlaying(true);
-      } catch (error) {
-        console.error('Error playing sound:', error);
-      }
-    }
-  };
-
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.container}>
