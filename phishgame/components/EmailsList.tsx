@@ -230,7 +230,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     height: 500,
     color: 'white',
-    fontSize: 13,
+    fontSize: 17,
     padding: 10,
     margin: 10,
   },
